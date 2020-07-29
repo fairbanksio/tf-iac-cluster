@@ -7,10 +7,10 @@
 
 #### Terraform Plans
 
-### Setup
+##### Setup
 `sudo snap install terraform`
 
-### Usage
+##### Usage
 - `cd` to the plan of your choice
 - Run `terraform plan` to initiate a dry-run
 - Execute `terraform apply` to apply the plan
