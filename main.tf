@@ -1,9 +1,6 @@
 variable "do_token" {}
 variable "do_cluster_name" {}
 variable "dd_api_key" {}
-variable "rancher_url" {}
-variable "rancher_api_key" {}
-variable "rancher_secret" {}
 
 # The configuration for the `remote` backend.
 terraform {
@@ -24,12 +21,6 @@ terraform {
 
 provider "digitalocean" {
   token = var.do_token
-}
-
-provider "rancher" {
-  api_url = var.rancher_url
-  access_key = var.rancher_api_key
-  secret_key = var.rancher_secret
 }
 
 resource "digitalocean_kubernetes_cluster" "my_digital_ocean_cluster" {
