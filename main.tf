@@ -24,10 +24,10 @@ provider "digitalocean" {
 }
 
 resource "digitalocean_kubernetes_cluster" "my_digital_ocean_cluster" {
-  name    = var.do_cluster_name
-  region  = "sfo2"
+  name         = var.do_cluster_name
+  region       = "sfo2"
   auto_upgrade = true
-  version = "1.18.6-do.0"
+  version      = "1.18.6-do.0"
 
   node_pool {
     name       = "worker-pool"
@@ -37,11 +37,11 @@ resource "digitalocean_kubernetes_cluster" "my_digital_ocean_cluster" {
 }
 
 module "datadog" {
-  source = "cookielab/datadog/kubernetes"
+  source  = "cookielab/datadog/kubernetes"
   version = "0.9.1"
 
   datadog_agent_api_key = var.dd_api_key
-  datadog_agent_site = "datadoghq.com"
+  datadog_agent_site    = "datadoghq.com"
 }
 
 output "cluster-id" {
