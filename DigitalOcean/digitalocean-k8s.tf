@@ -2,9 +2,23 @@ variable "do_token" {}
 variable "do_cluster_name" {}
 variable "dd_api_key" {}
 
+# The configuration for the `remote` backend.
+terraform {
+  backend "remote" {
+    # The name of your Terraform Cloud organization.
+    organization = "Fairbanks-io"
+
+    # The name of the Terraform Cloud workspace to store Terraform state files in.
+    workspaces {
+      name = "k8s-prod-us-sfo"
+    }
+  }
+}
+
 # Get a Digital Ocean token from your Digital Ocean account
 # See: https://www.digitalocean.com/docs/api/create-personal-access-token/
 # Set TF_VAR_do_token to use your Digital Ocean token automatically
+
 provider "digitalocean" {
   token = var.do_token
 }
