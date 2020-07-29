@@ -1,5 +1,6 @@
 variable "do_token" {}
 variable "do_cluster_name" {}
+variable "dd_api_key" {}
 
 # Get a Digital Ocean token from your Digital Ocean account
 # See: https://www.digitalocean.com/docs/api/create-personal-access-token/
@@ -19,6 +20,14 @@ resource "digitalocean_kubernetes_cluster" "my_digital_ocean_cluster" {
     size       = "s-2vcpu-2gb"
     node_count = 3
   }
+}
+
+module "datadog" {
+  source = "cookielab/datadog/kubernetes"
+  version = "0.9.0"
+
+  datadog_agent_api_key = "${var.dd_api_key}"
+  datadog_agent_site = "datadoghq.com"
 }
 
 output "cluster-id" {
