@@ -6,11 +6,11 @@ variable "dd_api_key" {}
 # See: https://www.digitalocean.com/docs/api/create-personal-access-token/
 # Set TF_VAR_do_token to use your Digital Ocean token automatically
 provider "digitalocean" {
-  token = "${var.do_token}"
+  token = var.do_token
 }
 
 resource "digitalocean_kubernetes_cluster" "my_digital_ocean_cluster" {
-  name    = "${var.do_cluster_name}"
+  name    = var.do_cluster_name
   region  = "sfo2"
   auto_upgrade = true
   version = "1.18.6-do.0"
@@ -24,12 +24,12 @@ resource "digitalocean_kubernetes_cluster" "my_digital_ocean_cluster" {
 
 module "datadog" {
   source = "cookielab/datadog/kubernetes"
-  version = "0.9.0"
+  version = "0.9.1"
 
-  datadog_agent_api_key = "${var.dd_api_key}"
+  datadog_agent_api_key = var.dd_api_key
   datadog_agent_site = "datadoghq.com"
 }
 
 output "cluster-id" {
-  value = "${digitalocean_kubernetes_cluster.my_digital_ocean_cluster.id}"
+  value = digitalocean_kubernetes_cluster.my_digital_ocean_cluster.id
 }
