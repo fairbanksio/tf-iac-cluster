@@ -36,13 +36,6 @@ resource "digitalocean_kubernetes_cluster" "my_digital_ocean_cluster" {
   }
 }
 
-module "datadog" {
-  source  = "cookielab/datadog/kubernetes"
-  version = "0.9.1"
-
-  datadog_agent_api_key = var.dd_api_key
-  datadog_agent_site    = "datadoghq.com"
-}
 
 output "cluster-id" {
   value = digitalocean_kubernetes_cluster.my_digital_ocean_cluster.id
