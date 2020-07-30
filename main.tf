@@ -63,6 +63,20 @@ resource "helm_release" "ingress" {
   }
 }
 
+provider "kubernetes" {
+  load_config_file       = false
+  host                   = digitalocean_kubernetes_cluster.k8s.endpoint
+  token                  = digitalocean_kubernetes_cluster.k8s.kube_config.0.token
+  cluster_ca_certificate = base64decode(digitalocean_kubernetes_cluster.k8s.kube_config.0.cluster_ca_certificate)
+}
+
+data "kubernetes_service" "nginx-ingress-controller" {
+  metadata {
+    name = "nginx-ingress-controller"
+  }
+  depends_on = [helm_release.ingress]
+}
+
 output "ingress-ip" {
-  value = helm_release.ingress.values.controller.service.load_balancer_ingress.0.ip
+  value = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
 }
