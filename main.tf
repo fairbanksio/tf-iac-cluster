@@ -58,8 +58,3 @@ data "helm_repository" "stable" {
   url  = "https://kubernetes-charts.storage.googleapis.com"
 }
 
-resource "helm_release" "ingress" {
-  repository = data.helm_repository.stable.url
-  chart      = "nginx-ingress"
-  name       = "test"
-}
