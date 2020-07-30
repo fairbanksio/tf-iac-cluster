@@ -45,7 +45,6 @@ output "cluster-id" {
 ###
 
 provider "helm" {
-  version = "1.0.0"
   kubernetes {
     load_config_file       = false
     host                   = digitalocean_kubernetes_cluster.k8s.endpoint
@@ -54,10 +53,13 @@ provider "helm" {
   }
 }
 
-resource "helm_release" "cert-manager" {
-  name       = "cert-manager"
-  repository = "https://kubernetes-charts.storage.googleapis.com/"
-  chart      = "jetstack/cert-manager"
-  version    = "v0.6.7"
-  namespace  = "cert-manager"
+data "helm_repository" "stable" {
+  name = "stable"
+  url  = "https://kubernetes-charts.storage.googleapis.com"
+}
+
+resource "helm_release" "ingress" {
+  repository = data.helm_repository.stable.url
+  chart      = "nginx-ingress"
+  name       = "test"
 }
