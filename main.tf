@@ -56,9 +56,9 @@ provider "helm" {
 }
 
 resource "helm_release" "maria-db" {
-  name  = "maria-db"
+  name       = "maria-db"
   repository = "https://kubernetes-charts.storage.googleapis.com"
-  chart = "stable/mariadb"
+  chart      = "stable/mariadb"
 
   set {
     name  = "mariadbUser"
@@ -77,9 +77,9 @@ resource "helm_release" "maria-db" {
 }
 
 resource "helm_release" "nginx-ingress" {
-  name  = "nginx-ingress-lb"
+  name       = "nginx-ingress-lb"
   repository = "https://kubernetes-charts.storage.googleapis.com"
-  chart = "stable/nginx-ingress"
+  chart      = "stable/nginx-ingress"
 
   set {
     name  = "controller.publishService.enabled"
