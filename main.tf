@@ -1,5 +1,7 @@
 variable "do_token" {}
 variable "do_cluster_name" {}
+variable "mariadb_user" {}
+variable "mariadb_pw" {}
 
 # The configuration for the `remote` backend.
 terraform {
@@ -41,12 +43,12 @@ resource "helm_release" "maria-db" {
 
     set {
         name  = "mariadbUser"
-        value = "admin"
+        value = var.mariadb_user
     }
 
     set {
         name = "mariadbPassword"
-        value = "qqq123"
+        value = var.mariadb_pw
     }
 
     set_string {
