@@ -41,7 +41,7 @@ output "cluster-id" {
 }
 
 output "ingress-ip" {
-  value = helm_release.ingress.metadata.values.controller.service.loadBalancerIP
+  value = helm_release.ingress.metadata.values
 }
 
 ###
