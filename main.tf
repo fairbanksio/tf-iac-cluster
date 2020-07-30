@@ -63,7 +63,7 @@ data "helm_repository" "stable" {
 
 resource "helm_release" "maria-db" {
   name       = "maria-db"
-  repository = data.helm_repository.url
+  repository = data.helm_repository.stable.metadata[0].url
   chart      = "stable/mariadb"
 
   set {
@@ -95,7 +95,7 @@ resource "helm_release" "nginx-ingress" {
 
 resource "helm_release" "cert-manager" {
   name       = "cert-manager"
-  repository = data.helm_repository.stable.url
+  repository = data.helm_repository.stable.metadata[0].url
   chart      = "jetstack/cert-manager"
   version    = "v0.16.0"
   namespace  = "cert-manager"
