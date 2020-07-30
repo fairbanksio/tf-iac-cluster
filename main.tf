@@ -54,10 +54,14 @@ provider "helm" {
   }
 }
 
+resource "helm_repository" "stable" {
+  name = "stable"
+  url  = "https://kubernetes-charts.storage.googleapis.com"
+}
+
 resource "helm_release" "maria-db" {
-  name       = "maria-db"
-  repository = "https://kubernetes-charts.storage.googleapis.com"
-  chart      = "stable/mariadb"
+  name  = "maria-db"
+  chart = "stable/mariadb"
 
   set {
     name  = "mariadbUser"
