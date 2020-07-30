@@ -63,7 +63,7 @@ data "helm_repository" "stable" {
 
 resource "helm_release" "maria-db" {
   name       = "maria-db"
-  repository = data.helm_repository.stable.url
+  repository = data.helm_repository.url
   chart      = "stable/mariadb"
 
   set {
@@ -84,7 +84,7 @@ resource "helm_release" "maria-db" {
 
 resource "helm_release" "nginx-ingress" {
   name       = "nginx-ingress-lb"
-  repository = data.helm_repository.stable.url
+  repository = data.helm_repository.stable.metadata[0].url
   chart      = "stable/nginx-ingress"
 
   set {
