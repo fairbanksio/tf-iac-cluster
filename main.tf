@@ -40,6 +40,10 @@ output "cluster-id" {
   value = digitalocean_kubernetes_cluster.k8s.id
 }
 
+output "ingress-ip" {
+  value = helm_release.ingress.metadata.values.controller.service.loadBalancerIP
+}
+
 ###
 # Helm
 ###
@@ -62,4 +66,8 @@ resource "helm_release" "ingress" {
   repository = data.helm_repository.stable.url
   chart      = "nginx-ingress"
   name       = "ingress"
+  set {
+    name  = "controller.service.name"
+    value = nginx-ingress-controller
+  }
 } 
