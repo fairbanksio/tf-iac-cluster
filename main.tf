@@ -35,6 +35,25 @@ resource "digitalocean_kubernetes_cluster" "my_digital_ocean_cluster" {
   }
 }
 
+resource "helm_release" "maria-db" {
+    name      = "maria-db"
+    chart     = "stable/mariadb"
+
+    set {
+        name  = "mariadbUser"
+        value = "admin"
+    }
+
+    set {
+        name = "mariadbPassword"
+        value = "qqq123"
+    }
+
+    set_string {
+        name = "image.tags"
+        value = "registry\\.io/terraform-provider-helm\\,example\\.io/terraform-provider-helm"
+    }
+}
 
 output "cluster-id" {
   value = digitalocean_kubernetes_cluster.my_digital_ocean_cluster.id
