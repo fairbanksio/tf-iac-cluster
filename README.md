@@ -8,7 +8,8 @@
 ### Terraform Plans
 
 ##### Setup
-`sudo snap install terraform`
+- Download the latest binary from Terraform.io: https://www.terraform.io/downloads.html
+- Unzip the binary into /usr/bin/local and set as executable
 
 ##### Usage
 - `cd` to the plan of your choice
@@ -16,5 +17,4 @@
 - Execute `terraform apply` to apply the plan
 
 ##### GitHub Integration
-Follow the setup here: 
-- https://github.com/jonfairbanks/terraform/blob/master/.github/workflows/terraform.yml
+Follow the setup here: https://github.com/jonfairbanks/terraform/blob/master/.github/workflows/terraform.yml
