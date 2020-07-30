@@ -75,5 +75,5 @@ data "kubernetes_service" "nginx-ingress-controller" {
 }
 
 output "ingress-ip" {
-  value = kubernetes_service.nginx-ingress-controller.load_balancer_ingress.ip
+  value = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.ip
 }
