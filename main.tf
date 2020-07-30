@@ -88,7 +88,7 @@ resource "helm_release" "nginx-ingress" {
 
 resource "helm_release" "cert-manager" {
   name       = "cert-manager"
-  repository = "https://charts.jetstack.io" 
+  repository = "https://charts.jetstack.io"
   chart      = "jetstack/cert-manager"
   version    = "v0.15.2"
   namespace  = "cert-manager"
