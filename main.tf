@@ -48,18 +48,16 @@ output "cluster-id" {
 
 provider "helm" {
   kubernetes {
-    config_path = digitalocean_kubernetes_cluster.k8s.kube_config.0.raw_config
+    host                   = digitalocean_kubernetes_cluster.k8s.endpoint
+    token                  = digitalocean_kubernetes_cluster.k8s.kube_config.0.token
+    cluster_ca_certificate = base64decode(digitalocean_kubernetes_cluster.k8s.kube_config.0.cluster_ca_certificate)
   }
 }
 
-resource "helm_repository" "stable" {
-  name = "stable"
-  url  = "https://kubernetes-charts.storage.googleapis.com"
-}
-
 resource "helm_release" "maria-db" {
-  name  = "maria-db"
-  chart = "stable/mariadb"
+  name       = "maria-db"
+  repository = "https://kubernetes-charts.storage.googleapis.com"
+  chart      = "stable/mariadb"
 
   set {
     name  = "mariadbUser"
