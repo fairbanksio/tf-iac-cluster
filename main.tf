@@ -42,17 +42,13 @@ output "cluster-id" {
   value = digitalocean_kubernetes_cluster.k8s.id
 }
 
-output "cluster-config" {
-  value = digitalocean_kubernetes_cluster.k8s.kube_config.0.raw_config
-}
-
 ###
 # Helm
 ###
 
 provider "helm" {
   kubernetes {
-    config_path = var.cluster-config
+    config_path = digitalocean_kubernetes_cluster.k8s.kube_config.0.raw_config
   }
 }
 
