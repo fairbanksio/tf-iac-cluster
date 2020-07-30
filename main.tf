@@ -54,22 +54,6 @@ provider "helm" {
   }
 }
 
-data "helm_repository" "stable" {
-  name = "stable"
-  url  = "https://kubernetes-charts.storage.googleapis.com"
-}
-
-resource "helm_release" "nginx-ingress" {
-  name       = "nginx-ingress-lb"
-  repository = data.helm_repository.stable.metadata[0].url
-  chart      = "stable/nginx-ingress"
-
-  set {
-    name  = "controller.publishService.enabled"
-    value = "true"
-  }
-}
-
 resource "helm_release" "cert-manager" {
   name       = "cert-manager"
   repository = data.helm_repository.stable.metadata[0].url
