@@ -58,3 +58,22 @@ data "helm_repository" "stable" {
   url  = "https://kubernetes-charts.storage.googleapis.com"
 }
 
+resource "helm_release" "ingress" {
+  repository = data.helm_repository.stable.url
+  chart      = "nginx-ingress"
+  name       = "ingress"
+  set {
+    name  = "controller.service.name"
+    value = "nginx-ingress-controller"
+  }
+} 
+
+data "kubernetes_service" "nginx-ingress-controller" {
+  metadata {
+    name = "nginx-ingress-controller"
+  }
+}
+
+output "ingress-ip" {
+  value = kubernetes_service.load_balancer_ingress.ip
+}
