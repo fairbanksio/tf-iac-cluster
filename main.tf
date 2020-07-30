@@ -1,6 +1,5 @@
 variable "do_token" {}
 variable "do_cluster_name" {}
-variable "dd_api_key" {}
 
 # The configuration for the `remote` backend.
 terraform {
@@ -36,13 +35,6 @@ resource "digitalocean_kubernetes_cluster" "my_digital_ocean_cluster" {
   }
 }
 
-module "datadog" {
-  source  = "cookielab/datadog/kubernetes"
-  version = "0.9.1"
-
-  datadog_agent_api_key = var.dd_api_key
-  datadog_agent_site    = "datadoghq.com"
-}
 
 output "cluster-id" {
   value = digitalocean_kubernetes_cluster.my_digital_ocean_cluster.id
