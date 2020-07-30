@@ -68,6 +68,6 @@ resource "helm_release" "ingress" {
   name       = "ingress"
   set {
     name  = "controller.service.name"
-    value = nginx-ingress-controller
+    value = "nginx-ingress-controller"
   }
 } 
