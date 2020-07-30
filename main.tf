@@ -60,8 +60,8 @@ resource "helm_repository" "stable" {
 }
 
 resource "helm_release" "maria-db" {
-  name       = "maria-db"
-  chart      = "stable/mariadb"
+  name  = "maria-db"
+  chart = "stable/mariadb"
 
   set {
     name  = "mariadbUser"
