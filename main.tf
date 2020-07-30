@@ -3,28 +3,29 @@ variable "do_cluster_name" {}
 variable "mariadb_user" {}
 variable "mariadb_pw" {}
 
-# The configuration for the `remote` backend.
+###
+# Terraform Cloud
+###
+
 terraform {
   backend "remote" {
-    # The name of your Terraform Cloud organization.
     organization = "Fairbanks-io"
 
-    # The name of the Terraform Cloud workspace to store Terraform state files in.
     workspaces {
       name = "k8s-prod-us-sfo"
     }
   }
 }
 
-# Get a Digital Ocean token from your Digital Ocean account
-# See: https://www.digitalocean.com/docs/api/create-personal-access-token/
-# Set TF_VAR_do_token to use your Digital Ocean token automatically
+###
+# DigitalOcean
+###
 
 provider "digitalocean" {
   token = var.do_token
 }
 
-resource "digitalocean_kubernetes_cluster" "my_digital_ocean_cluster" {
+resource "digitalocean_kubernetes_cluster" "k8s" {
   name         = var.do_cluster_name
   region       = "sfo2"
   auto_upgrade = true
@@ -34,6 +35,24 @@ resource "digitalocean_kubernetes_cluster" "my_digital_ocean_cluster" {
     name       = "worker-pool"
     size       = "s-2vcpu-2gb"
     node_count = 3
+  }
+}
+
+output "cluster-id" {
+  value = digitalocean_kubernetes_cluster.k8s.id
+}
+
+output "cluster-config" {
+  value = digitalocean_kubernetes_cluster.k8s.kube_config.0.raw_config
+}
+
+###
+# Helm
+###
+
+provider "helm" {
+  kubernetes {
+    config_path = var.cluster-config
   }
 }
 
@@ -57,6 +76,20 @@ resource "helm_release" "maria-db" {
   }
 }
 
-output "cluster-id" {
-  value = digitalocean_kubernetes_cluster.my_digital_ocean_cluster.id
+resource "helm_release" "nginx-ingress" {
+  name  = "nginx-ingress-lb"
+  chart = "stable/nginx-ingress"
+
+  set {
+    name  = "controller.publishService.enabled"
+    value = "true"
+  }
+}
+
+resource "helm_release" "cert-manager" {
+  name       = "cert-manager"
+  repository = "https://charts.jetstack.io" 
+  chart      = "jetstack/cert-manager"
+  version    = "v0.15.2"
+  namespace  = "cert-manager"
 }
