@@ -74,6 +74,6 @@ resource "helm_release" "cert-manager" {
   name       = "cert-manager"
   repository = data.helm_repository.stable.metadata[0].url
   chart      = "jetstack/cert-manager"
-  version    = "v0.16.0"
+  version    = "v0.6.7"
   namespace  = "cert-manager"
 }
