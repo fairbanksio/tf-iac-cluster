@@ -6,7 +6,7 @@
 ![License](https://img.shields.io/github/license/jonfairbanks/terraform.svg?style=flat)
 
 ### Terraform Plans
-
+ToDo
 ##### Setup
 `sudo snap install terraform`
 
