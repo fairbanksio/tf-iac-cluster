@@ -1,6 +1,5 @@
 variable "do_token" {}
 variable "do_cluster_name" {}
-variable "dd_api_key" {}
 
 # The configuration for the `remote` backend.
 terraform {
