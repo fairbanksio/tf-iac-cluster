@@ -1,7 +1,5 @@
 variable "do_token" {}
 variable "do_cluster_name" {}
-variable "mariadb_user" {}
-variable "mariadb_pw" {}
 
 ###
 # Terraform Cloud
@@ -56,47 +54,10 @@ provider "helm" {
   }
 }
 
-data "helm_repository" "stable" {
-  name = "stable"
-  url  = "https://kubernetes-charts.storage.googleapis.com"
-}
-
-resource "helm_release" "maria-db" {
-  name       = "maria-db"
-  repository = data.helm_repository.stable.metadata[0].url
-  chart      = "stable/mariadb"
-
-  set {
-    name  = "mariadbUser"
-    value = var.mariadb_user
-  }
-
-  set {
-    name  = "mariadbPassword"
-    value = var.mariadb_pw
-  }
-
-  set_string {
-    name  = "image.tags"
-    value = "registry\\.io/terraform-provider-helm\\,example\\.io/terraform-provider-helm"
-  }
-}
-
-resource "helm_release" "nginx-ingress" {
-  name       = "nginx-ingress-lb"
-  repository = data.helm_repository.stable.metadata[0].url
-  chart      = "stable/nginx-ingress"
-
-  set {
-    name  = "controller.publishService.enabled"
-    value = "true"
-  }
-}
-
 resource "helm_release" "cert-manager" {
   name       = "cert-manager"
-  repository = data.helm_repository.stable.metadata[0].url
+  repository = "https://kubernetes-charts.storage.googleapis.com/"
   chart      = "jetstack/cert-manager"
-  version    = "v0.16.0"
+  version    = "v0.6.7"
   namespace  = "cert-manager"
 }
