@@ -45,7 +45,6 @@ output "cluster-id" {
 ###
 
 provider "helm" {
-  version = "1.0.0"
   kubernetes {
     load_config_file       = false
     host                   = digitalocean_kubernetes_cluster.k8s.endpoint
@@ -61,6 +60,6 @@ data "helm_repository" "stable" {
 
 resource "helm_release" "ingress" {
   repository = data.helm_repository.stable.url
-  chart = "nginx-ingress"
-  name = "test"
+  chart      = "nginx-ingress"
+  name       = "test"
 }
