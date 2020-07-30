@@ -55,13 +55,9 @@ provider "helm" {
   }
 }
 
-resource "helm_repository" "stable" {
-  name = "stable"
-  url  = "https://kubernetes-charts.storage.googleapis.com"
-}
-
 resource "helm_release" "maria-db" {
   name  = "maria-db"
+  repository = "https://kubernetes-charts.storage.googleapis.com"
   chart = "stable/mariadb"
 
   set {
@@ -82,10 +78,19 @@ resource "helm_release" "maria-db" {
 
 resource "helm_release" "nginx-ingress" {
   name  = "nginx-ingress-lb"
+  repository = "https://kubernetes-charts.storage.googleapis.com"
   chart = "stable/nginx-ingress"
 
   set {
     name  = "controller.publishService.enabled"
     value = "true"
   }
+}
+
+resource "helm_release" "cert-manager" {
+  name       = "cert-manager"
+  repository = "https://charts.jetstack.io"
+  chart      = "jetstack/cert-manager"
+  version    = "v0.15.2"
+  namespace  = "cert-manager"
 }
