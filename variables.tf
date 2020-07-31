@@ -7,3 +7,6 @@ variable "dd_api_key" {}
 variable "cloudflare_email" {}
 variable "cloudflare_api_key" {}
 variable "cloudflare_zone_id" {}
+variable "mongo_root" {}
+variable "mongo_user" {}
+variable "mongo_pw" {}
