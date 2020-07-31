@@ -119,3 +119,17 @@ data "kubernetes_service" "nginx-ingress-controller" {
 output "ingress-ip" {
   value = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
 }
+
+provider "cloudflare" {
+  email   = var.cloudflare_email
+  api_key = var.cloudflare_api_key
+}
+
+# Add a record to the domain
+resource "cloudflare_record" "foobar" {
+  zone_id = var.cloudflare_zone_id
+  name    = "terraform"
+  value   = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
+  type    = "A"
+  ttl     = 3600
+}
