@@ -135,5 +135,5 @@ resource "cloudflare_record" "foobar" {
   proxied = true
   value   = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
   type    = "A"
-  ttl     = 3600
+  ttl     = 1
 }
