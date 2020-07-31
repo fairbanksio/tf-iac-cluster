@@ -19,7 +19,7 @@ Spin up a developer ready Kubernetes cluster in DigitalOcean using Terraform pro
 - Digital Ocean Spaces Access ID and Secret Key
   - https://www.digitalocean.com/community/tutorials/how-to-create-a-digitalocean-space-and-api-key#creating-an-access-key
   
-- CloudFlare GLOBAL API key (not api token)
+- CloudFlare GLOBAL API key (not API token)
   - https://support.cloudflare.com/hc/en-us/articles/200167836-Managing-API-Tokens-and-Keys
   
 - Datadog API key
@@ -35,6 +35,7 @@ Spin up a developer ready Kubernetes cluster in DigitalOcean using Terraform pro
 
 2. Store your Terraform Cloud API key as a secret called  **TF_API_TOKEN**  in the github repo
   - https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets
+
 3. Create workspace in terraform cloud called **k8s-prod-us-sfo** and connect it to your forked repo
   - https://www.terraform.io/docs/cloud/workspaces/creating.html
   
@@ -97,7 +98,7 @@ https://www.terraform.io/docs/cloud/workspaces/variables.html#managing-variables
   - Alternatively: run get-config.sh from this repo.
 
 ## TODO
-- Allow Terraform workspace to be defined via variable
-- Rename do_Access_id to 'do_spaces_access_key'
-- Rename do_secret_key to 'do_spaces_secret_key'
-- Add 'troubleshooting section' to README
+[ ] Allow Terraform workspace to be defined via variable
+[ ] Rename do_Access_id to 'do_spaces_access_key'
+[ ] Rename do_secret_key to 'do_spaces_secret_key'
+[ ] Add 'troubleshooting section' to README
