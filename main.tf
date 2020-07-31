@@ -1,5 +1,7 @@
 variable "do_token" {}
 variable "do_cluster_name" {}
+variable "do_access_id" {}
+variable "do_secret_key" {}
 variable "dd_api_key" {}
 variable "cloudflare_email" {}
 variable "cloudflare_api_key" {}
@@ -24,7 +26,9 @@ terraform {
 ###
 
 provider "digitalocean" {
-  token = var.do_token
+  token             = var.do_token
+  spaces_access_id  = var.do_access_id
+  spaces_secret_key = var.do_secret_key
 }
 
 resource "digitalocean_kubernetes_cluster" "k8s" {
@@ -38,6 +42,11 @@ resource "digitalocean_kubernetes_cluster" "k8s" {
     size       = "s-2vcpu-2gb"
     node_count = 3
   }
+}
+
+resource "digitalocean_spaces_bucket" "static" {
+  name   = "static"
+  region = "sfo2"
 }
 
 output "cluster-id" {
