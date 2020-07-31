@@ -54,7 +54,7 @@ provider "helm" {
   }
 }
 
-resource "helm_release" "my_cache" {
+resource "helm_release" "keel" {
   name       = "keel"
   repository = "https://charts.keel.sh"
   chart      = "keel"
@@ -72,6 +72,12 @@ resource "helm_release" "ingress" {
   set {
     name  = "controller.service.name"
     value = "nginx-ingress-controller"
+  }
+}
+
+resource "kubernetes_namespace" "datadog" {
+  metadata {
+    name = "datadog"
   }
 }
 
