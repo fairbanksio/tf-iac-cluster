@@ -1,0 +1,12 @@
+variable "do_token" {}
+variable "do_cluster_name" {}
+variable "do_access_id" {}
+variable "do_secret_key" {}
+variable "do_space_name" {}
+variable "dd_api_key" {}
+variable "cloudflare_email" {}
+variable "cloudflare_api_key" {}
+variable "cloudflare_zone_id" {}
+variable "mongo_root" {}
+variable "mongo_user" {}
+variable "mongo_pw" {}
