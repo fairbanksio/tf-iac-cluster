@@ -7,6 +7,9 @@ variable "dd_api_key" {}
 variable "cloudflare_email" {}
 variable "cloudflare_api_key" {}
 variable "cloudflare_zone_id" {}
+variable "mongo_root" {}
+variable "mongo_user" {}
+variable "mongo_pw" {}
 
 ###
 # Terraform Cloud
@@ -64,6 +67,37 @@ provider "helm" {
     host                   = digitalocean_kubernetes_cluster.k8s.endpoint
     token                  = digitalocean_kubernetes_cluster.k8s.kube_config.0.token
     cluster_ca_certificate = base64decode(digitalocean_kubernetes_cluster.k8s.kube_config.0.cluster_ca_certificate)
+  }
+}
+
+## MongoDB
+
+resource "kubernetes_namespace" "mongodb" {
+  metadata {
+    name = "mongodb"
+  }
+}
+
+resource "helm_release" "mongodb" {
+  name       = "mongodb"
+  repository = "https://charts.bitnami.com/bitnami"
+  chart      = "mongodb-sharded"
+  namespace  = "mongodb"
+  set {
+    name  = "mongodbRootPassword"
+    value = var.mongo_root
+  }
+  set {
+    name  = "mongodbUsername"
+    value = var.mongo_user
+  }
+  set {
+    name  = "mongodbPassword"
+    value = var.mongo_pw
+  }
+  set {
+    name  = "mongodbDatabase"
+    value = var.do_cluster_name
   }
 }
 
@@ -139,7 +173,7 @@ provider "cloudflare" {
 }
 
 # Add a record to the domain
-resource "cloudflare_record" "foobar" {
+resource "cloudflare_record" "terraform" {
   zone_id = var.cloudflare_zone_id
   name    = "terraform"
   proxied = true
