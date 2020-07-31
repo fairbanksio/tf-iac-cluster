@@ -1,7 +1,7 @@
 variable "do_token" {}
 variable "do_cluster_name" {}
 variable "do_access_id" {}
-variable "do_access_key" {}
+variable "do_secret_key" {}
 variable "dd_api_key" {}
 variable "cloudflare_email" {}
 variable "cloudflare_api_key" {}
