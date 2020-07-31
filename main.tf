@@ -69,7 +69,8 @@ resource "helm_release" "datadog" {
   chart      = "datadog"
   name       = "datadog"
   set {
-    apiKey = var.dd_api_key
+    name  = "datadog.apiKey"
+    value = var.dd_api_key
   }
 }
 
