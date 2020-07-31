@@ -101,35 +101,3 @@ resource "helm_release" "mongodb" {
     value = var.do_cluster_name
   }
 }
-
-
-## MongoDB
-
-resource "kubernetes_namespace" "mongodb" {
-  metadata {
-    name = "mongodb"
-  }
-}
-
-resource "helm_release" "mongodb" {
-  name       = "mongodb"
-  repository = "https://charts.bitnami.com/bitnami"
-  chart      = "mongodb-sharded"
-  namespace  = "mongodb"
-  set {
-    name  = "mongodbRootPassword"
-    value = var.mongo_root
-  }
-  set {
-    name  = "mongodbUsername"
-    value = var.mongo_user
-  }
-  set {
-    name  = "mongodbPassword"
-    value = var.mongo_pw
-  }
-  set {
-    name  = "mongodbDatabase"
-    value = var.do_cluster_name
-  }
-}
