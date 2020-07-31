@@ -1,4 +1,3 @@
-
 ## Digital Ocean
 resource "digitalocean_kubernetes_cluster" "k8s" {
   name         = var.do_cluster_name
