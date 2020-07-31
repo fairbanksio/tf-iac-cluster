@@ -54,6 +54,13 @@ provider "helm" {
   }
 }
 
+resource "helm_release" "my_cache" {
+  name       = "keel"
+  repository = "https://charts.keel.sh"
+  chart      = "keel"
+  namespace  = "kube-system"
+}
+
 resource "helm_release" "ingress" {
   repository = "https://kubernetes-charts.storage.googleapis.com"
   chart      = "nginx-ingress"
@@ -68,6 +75,7 @@ resource "helm_release" "datadog" {
   repository = "https://kubernetes-charts.storage.googleapis.com"
   chart      = "datadog"
   name       = "datadog"
+  namespace  = "datadog"
   set {
     name  = "datadog.apiKey"
     value = var.dd_api_key
@@ -87,6 +95,10 @@ data "kubernetes_service" "nginx-ingress-controller" {
   }
   depends_on = [helm_release.ingress]
 }
+
+##
+# Output
+##
 
 output "ingress-ip" {
   value = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
