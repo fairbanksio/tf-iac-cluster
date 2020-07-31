@@ -7,6 +7,12 @@
 
 ### Terraform Plans
 
+Spin up a developer ready Kubernetes cluster in DigitalOcean using Terraform
+
+##### Prerequisites
+- A pre-configured Terraform Cloud account and API key
+- A local Terraform host or automated pipeline
+
 ##### Setup
 - Download the latest binary from Terraform.io: https://www.terraform.io/downloads.html
 - Unzip the binary into /usr/bin/local and set as executable
@@ -17,4 +23,6 @@
 - Execute `terraform apply` to apply the plan
 
 ##### GitHub Integration
-Follow the setup here: https://github.com/jonfairbanks/terraform/blob/master/.github/workflows/terraform.yml
+Instead of running the Terraform script manually, changes can be automated via GitHub Actions. 
+
+For more information, follow the setup here: https://github.com/jonfairbanks/terraform/blob/master/.github/workflows/terraform.yml
