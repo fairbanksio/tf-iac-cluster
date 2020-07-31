@@ -61,16 +61,7 @@ resource "helm_release" "ingress" {
   }
 }
 
-
-# Add a record to the domain
-resource "cloudflare_record" "terraform" {
-  zone_id = var.cloudflare_zone_id
-  name    = "terraform"
-  proxied = true
-  value   = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
-  type    = "A"
-  ttl     = 1
-}
+## MongoDB
 
 resource "kubernetes_namespace" "mongodb" {
   metadata {
@@ -99,4 +90,14 @@ resource "helm_release" "mongodb" {
     name  = "mongodbDatabase"
     value = var.do_cluster_name
   }
+}
+
+# Add a record to the domain
+resource "cloudflare_record" "terraform" {
+  zone_id = var.cloudflare_zone_id
+  name    = "terraform"
+  proxied = true
+  value   = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
+  type    = "A"
+  ttl     = 1
 }
