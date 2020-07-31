@@ -173,7 +173,7 @@ provider "cloudflare" {
 }
 
 # Add a record to the domain
-resource "cloudflare_record" "foobar" {
+resource "cloudflare_record" "terraform" {
   zone_id = var.cloudflare_zone_id
   name    = "terraform"
   proxied = true
