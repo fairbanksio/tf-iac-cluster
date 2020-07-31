@@ -54,6 +54,8 @@ provider "helm" {
   }
 }
 
+## Keel
+
 resource "helm_release" "keel" {
   name       = "keel"
   repository = "https://charts.keel.sh"
@@ -65,16 +67,7 @@ resource "helm_release" "keel" {
   }
 }
 
-resource "helm_release" "ingress" {
-  repository = "https://kubernetes-charts.storage.googleapis.com"
-  chart      = "nginx-ingress"
-  name       = "ingress"
-  set {
-    name  = "controller.service.name"
-    value = "nginx-ingress-controller"
-  }
-}
-
+## Datadog 
 resource "kubernetes_namespace" "datadog" {
   metadata {
     name = "datadog"
@@ -89,6 +82,18 @@ resource "helm_release" "datadog" {
   set {
     name  = "datadog.apiKey"
     value = var.dd_api_key
+  }
+}
+
+## Nginx 
+
+resource "helm_release" "ingress" {
+  repository = "https://kubernetes-charts.storage.googleapis.com"
+  chart      = "nginx-ingress"
+  name       = "ingress"
+  set {
+    name  = "controller.service.name"
+    value = "nginx-ingress-controller"
   }
 }
 
