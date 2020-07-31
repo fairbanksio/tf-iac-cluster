@@ -59,6 +59,10 @@ resource "helm_release" "my_cache" {
   repository = "https://charts.keel.sh"
   chart      = "keel"
   namespace  = "kube-system"
+  set {
+    name  = "helmProvider.version"
+    value = "v3"
+  }
 }
 
 resource "helm_release" "ingress" {
