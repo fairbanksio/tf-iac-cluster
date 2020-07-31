@@ -69,15 +69,7 @@ resource "helm_release" "datadog" {
   chart      = "datadog"
   name       = "datadog"
   set {
-    datadog = {
-      apiKey = var.dd_api_key
-    }
-    clusterAgent = {
-      enabled = true
-    }
-    metricsProvider = {
-      enabled = true
-    }
+    apiKey = var.dd_api_key
   }
 }
 
