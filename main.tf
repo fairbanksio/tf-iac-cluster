@@ -75,6 +75,12 @@ resource "helm_release" "ingress" {
   }
 }
 
+resource "kubernetes_namespace" "datadog" {
+  metadata {
+    name = "datadog"
+  }
+}
+
 resource "helm_release" "datadog" {
   repository = "https://kubernetes-charts.storage.googleapis.com"
   chart      = "datadog"
