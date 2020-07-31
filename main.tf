@@ -67,6 +67,15 @@ provider "helm" {
   }
 }
 
+## MongoDB
+
+resource "helm_release" "mongodb" {
+  name       = "mongodb"
+  repository = "https://charts.bitnami.com/bitnami"
+  chart      = "mongodb-sharded"
+  namespace  = "mongodb"
+}
+
 ## Keel
 
 resource "helm_release" "keel" {
