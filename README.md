@@ -98,7 +98,7 @@ https://www.terraform.io/docs/cloud/workspaces/variables.html#managing-variables
   - Alternatively: run get-config.sh from this repo.
 
 ## TODO
-[ ] Allow Terraform workspace to be defined via variable
-[ ] Rename do_Access_id to 'do_spaces_access_key'
-[ ] Rename do_secret_key to 'do_spaces_secret_key'
-[ ] Add 'troubleshooting section' to README
+- [ ] Allow Terraform workspace to be defined via variable
+- [ ] Rename do_Access_id to 'do_spaces_access_key'
+- [ ] Rename do_secret_key to 'do_spaces_secret_key'
+- [ ] Add 'troubleshooting section' to README
