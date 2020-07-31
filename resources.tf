@@ -61,16 +61,22 @@ resource "helm_release" "ingress" {
   }
 }
 
+## docker-node-app
 
-# Add a record to the domain
-resource "cloudflare_record" "terraform" {
-  zone_id = var.cloudflare_zone_id
-  name    = "terraform"
-  proxied = true
-  value   = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
-  type    = "A"
-  ttl     = 1
+resource "kubernetes_namespace" "docker-node-app" {
+  metadata {
+    name = "docker-node-app"
+  }
 }
+
+resource "helm_release" "docker-node-app" {
+  repository = "https://github.com/jonfairbanks/docker-node-app/tree/develop"
+  chart      = "docker-node-app"
+  name       = "docker-node-app"
+  namespace  = "docker-node-app"
+}
+
+## MongoDB
 
 resource "kubernetes_namespace" "mongodb" {
   metadata {
@@ -99,4 +105,14 @@ resource "helm_release" "mongodb" {
     name  = "mongodbDatabase"
     value = var.do_cluster_name
   }
+}
+
+# Add a record to the domain
+resource "cloudflare_record" "terraform" {
+  zone_id = var.cloudflare_zone_id
+  name    = "terraform"
+  proxied = true
+  value   = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
+  type    = "A"
+  ttl     = 1
 }
