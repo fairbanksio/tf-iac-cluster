@@ -68,6 +68,7 @@ resource "helm_release" "keel" {
 }
 
 ## Datadog 
+
 resource "kubernetes_namespace" "datadog" {
   metadata {
     name = "datadog"
