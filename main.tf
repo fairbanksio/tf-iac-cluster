@@ -7,6 +7,9 @@ variable "dd_api_key" {}
 variable "cloudflare_email" {}
 variable "cloudflare_api_key" {}
 variable "cloudflare_zone_id" {}
+variable "mongo_root" {}
+variable "mongo_user" {}
+variable "mongo_pw" {}
 
 ###
 # Terraform Cloud
@@ -80,6 +83,22 @@ resource "helm_release" "mongodb" {
   repository = "https://charts.bitnami.com/bitnami"
   chart      = "mongodb-sharded"
   namespace  = "mongodb"
+  set {
+    name  = "mongodbRootPassword"
+    value = var.mongo_root
+  }
+  set {
+    name  = "mongodbUsername"
+    value = var.mongo_user
+  }
+  set {
+    name  = "mongodbPassword"
+    value = var.mongo_pw
+  }
+  set {
+    name  = "mongodbDatabase"
+    value = var.do_cluster_name
+  }
 }
 
 ## Keel
