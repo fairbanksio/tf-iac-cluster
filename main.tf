@@ -1,5 +1,6 @@
 variable "do_token" {}
 variable "do_cluster_name" {}
+variable "dd_api_key" {}
 
 ###
 # Terraform Cloud
@@ -60,6 +61,23 @@ resource "helm_release" "ingress" {
   set {
     name  = "controller.service.name"
     value = "nginx-ingress-controller"
+  }
+}
+
+resource "helm_release" "datadog" {
+  repository = "https://kubernetes-charts.storage.googleapis.com"
+  chart      = "datadog"
+  name       = "datadog"
+  set {
+    datadog = {
+      apiKey = var.dd_api_key
+    }
+    clusterAgent = {
+      enabled = true
+    }
+    metricsProvider = {
+      enabled = true
+    }
   }
 }
 
