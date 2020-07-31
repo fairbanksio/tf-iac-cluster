@@ -69,6 +69,12 @@ provider "helm" {
 
 ## MongoDB
 
+resource "kubernetes_namespace" "mongodb" {
+  metadata {
+    name = "mongodb"
+  }
+}
+
 resource "helm_release" "mongodb" {
   name       = "mongodb"
   repository = "https://charts.bitnami.com/bitnami"
