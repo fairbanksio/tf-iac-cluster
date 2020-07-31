@@ -54,7 +54,7 @@ provider "helm" {
   }
 }
 
-resource "helm_release" "my_cache" {
+resource "helm_release" "keel" {
   name       = "keel"
   repository = "https://charts.keel.sh"
   chart      = "keel"
