@@ -7,7 +7,7 @@
 
 ### Terraform Plans
 
-Spin up a developer ready Kubernetes cluster in DigitalOcean using Terraform protected by CloudFlare.
+Spin up a developer ready Kubernetes cluster in DigitalOcean using Terraform.
 
 ##### Prerequisites
 - A pre-configured Terraform Cloud account and API key
