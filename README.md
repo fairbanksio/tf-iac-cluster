@@ -10,73 +10,37 @@
 Spin up a developer ready Kubernetes cluster in DigitalOcean using Terraform protected by CloudFlare with monitoring/logging available in DataDog.
 
 ##### Prerequisites
-- A Terraform Cloud API key
-  - https://www.terraform.io/docs/cloud/users-teams-organizations/api-tokens.html
-
-- Digital Ocean Personal Access Token
-  - https://www.digitalocean.com/docs/apis-clis/api/create-personal-access-token/
-
-- Digital Ocean Spaces Access ID and Secret Key
-  - https://www.digitalocean.com/community/tutorials/how-to-create-a-digitalocean-space-and-api-key#creating-an-access-key
-  
-- CloudFlare GLOBAL API key (not API token)
-  - https://support.cloudflare.com/hc/en-us/articles/200167836-Managing-API-Tokens-and-Keys
-  
-- Datadog API key
-  - https://docs.datadoghq.com/account_management/api-app-keys/
-  
-- Terraform installed locally (Optional)
-  - https://learn.hashicorp.com/terraform/getting-started/install.html
-  *Make sure to install > v0.12.29*
+- [A Terraform Cloud API key](https://www.terraform.io/docs/cloud/users-teams-organizations/api-tokens.html)
+- [DigitalOcean Personal Access Token](https://www.digitalocean.com/docs/apis-clis/api/create-personal-access-token/)
+- [DigitalOcean Spaces Access ID and Secret Key](https://www.digitalocean.com/community/tutorials/how-to-create-a-digitalocean-space-and-api-key#creating-an-access-key)
+- [CloudFlare GLOBAL API key (not API token)](https://support.cloudflare.com/hc/en-us/articles/200167836-Managing-API-Tokens-and-Keys)
+- [Datadog API key](https://docs.datadoghq.com/account_management/api-app-keys/)
+- Optional: [Terraform installed locally](https://learn.hashicorp.com/terraform/getting-started/install.html) *Make sure to install > v0.12.29*
 
 
 ##### Setup
 1. Fork this repo
 
-2. Store your Terraform Cloud API key as a secret called  **TF_API_TOKEN**  in the github repo
-  - https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets
+2. [Store your Terraform Cloud API key as a secret called  **TF_API_TOKEN**  in the Github repo](https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets)
 
-3. Create workspace in terraform cloud called **k8s-prod-us-sfo** and connect it to your forked repo
-  - https://www.terraform.io/docs/cloud/workspaces/creating.html
+3. [Create a workspace](https://www.terraform.io/docs/cloud/workspaces/creating.html) in Terraform Cloud called **k8s-prod-us-sfo** and connect it to your forked repo
   
-4. Define the below variables in the terraform workspace
-https://www.terraform.io/docs/cloud/workspaces/variables.html#managing-variables-in-the-ui
+4. [Define the below variables in the Terraform Cloud workspace](https://www.terraform.io/docs/cloud/workspaces/variables.html#managing-variables-in-the-ui "Define the below variables in the Terraform Cloud workspace")
 
-  - do_token
-    - Your digital ocean personal access token
-
-  - do_cluster_name
-    - The name of the kubernetes cluster to be created in digital ocean
-
-  - do_access_id
-    - The 'Key' from Digital Spaces Access Key 
-
-  - do_secret_key
-     - The 'Secret' from Digital Spaces Access Key
-
-  - do_space_name
-     - The name you wish to call the spaces object to be created on digital ocean
-
-  - dd_api_key
-     - API key for DataDog
-
-  - cloudflare_email
-     - Email address used on CloudFlare account where key is created
-
-  - cloudflare_api_key
-     - GLOBAL API key for cloud flare (not token)
-
-  - cloudflare_zone_id
-     - ZoneID of the DNS zone to be used to create dns record (can be found on bottom right of overview page for the DNS zone in the cloudflare portal)
-
-  - mongo_root
-     - Desired root password for MongoDB deployment
-
-  - mongo_user
-     - Desired password of the user account created for the MongoDB deployment
-
-  - mongo_pw
-     - Desired password of the user account created for the MongoDB deployment
+| Variable | Description |
+| ------------ | ------------ |
+| `do_token` | Your DigitalOcean access token |
+| `do_cluster_name` | Name of the Kubernetes cluster |
+| `do_space_name` | DigitalOcean Space Name|
+| `do_access_id` | DigitalOcean Space Access Key |
+| `do_secret_key` | DigitalOcean Space Secret |
+| `dd_api_key` | Datadog API Key |
+| `cloudflare_email` | Cloudflare Account Email |
+| `cloudflare_api_key` | GLOBAL API key for Cloudflare (not token) |
+| `cloudflare_zone_id` | ZoneID used to create DNS record |
+| `mongo_root` | MongoDB Root Password |
+| `mongo_user` | MongoDB User Account |
+| `mongo_pw` | MongoDB User Password |
 
 ##### Deployment
 ###### Automatic Deployment
@@ -86,16 +50,15 @@ https://www.terraform.io/docs/cloud/workspaces/variables.html#managing-variables
   4. Validate on Digital Ocean that cluster has been created
   
 ###### Local/Manual Deployment
-  1. clone this repo down to local PC where terraform installed
-  2. CD into root of this repo
-  3. Run `terraform init`
-  4. Run 'terraform plan'
-  5. run 'terraform apply'
-  6. Validate on Digital Ocean that cluster has been created.
+  1. Clone this repo and `cd` into it
+  2. Run `terraform init` to prepare Terraform
+  3. Run `terraform plan` to do a dry-run
+  4. run `terraform apply` to apply the plan
+  5. Validate on Digital Ocean that cluster has been created.
   
 ##### Accessing Cluster
-  - Click on the 'actions' of the cluster in Digital Ocean to 'download kube config'
-  - Alternatively: run get-config.sh from this repo.
+  - Click on the 'actions' of the cluster in Digital Ocean to 'Download Kube Config'
+  - Alternatively: run `get-config.sh` from this repo
 
 ## TODO
 - [ ] Allow Terraform workspace to be defined via variable
