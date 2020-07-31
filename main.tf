@@ -2,6 +2,7 @@ variable "do_token" {}
 variable "do_cluster_name" {}
 variable "do_access_id" {}
 variable "do_secret_key" {}
+variable "do_space_name" {}
 variable "dd_api_key" {}
 variable "cloudflare_email" {}
 variable "cloudflare_api_key" {}
@@ -44,8 +45,8 @@ resource "digitalocean_kubernetes_cluster" "k8s" {
   }
 }
 
-resource "digitalocean_spaces_bucket" "static" {
-  name   = "static"
+resource "digitalocean_spaces_bucket" "static-assets" {
+  name   = var.do_space_name
   region = "sfo2"
 }
 
