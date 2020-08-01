@@ -70,7 +70,7 @@ resource "kubernetes_namespace" "docker-node-app" {
 }
 
 resource "helm_release" "docker-node-app" {
-  repository = "https://github.com/jonfairbanks/docker-node-app/tree/develop"
+  repository = "https://jonfairbanks.github.io/helm-charts"
   chart      = "docker-node-app"
   name       = "docker-node-app"
   namespace  = "docker-node-app"
