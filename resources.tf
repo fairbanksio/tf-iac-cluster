@@ -140,7 +140,7 @@ resource "helm_release" "tetris" {
   }
   set {
     name  = "ingress.hosts[0].paths[0]"
-    value = "/"
+    value = "\\"
   }
 }
 
