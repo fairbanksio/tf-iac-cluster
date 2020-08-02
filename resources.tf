@@ -120,16 +120,6 @@ resource "helm_release" "mongodb" {
   }
 }
 
-# Add a record to the domain
-resource "cloudflare_record" "terraform" {
-  zone_id = var.cloudflare_zone_id
-  name    = "terraform"
-  proxied = true
-  value   = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
-  type    = "A"
-  ttl     = 1
-}
-
 ## Tetris
 
 resource "kubernetes_namespace" "tetris" {
@@ -157,7 +147,6 @@ resource "helm_release" "tetris" {
   }
 }
 
-# Add a record to the domain
 resource "cloudflare_record" "tetris" {
   zone_id = var.cloudflare_zone_id
   name    = "tetris"
