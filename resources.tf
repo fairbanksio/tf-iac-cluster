@@ -67,7 +67,7 @@ resource "helm_release" "ingress" {
 
 ## docker-node-app
 
-/* resource "kubernetes_namespace" "docker-node-app" {
+resource "kubernetes_namespace" "docker-node-app" {
   metadata {
     name = "docker-node-app"
   }
@@ -95,7 +95,7 @@ resource "cloudflare_record" "kube" {
   value   = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
   type    = "A"
   ttl     = 1
-} */
+}
 
 ## MongoDB
 
