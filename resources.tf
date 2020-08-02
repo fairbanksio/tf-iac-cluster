@@ -78,6 +78,10 @@ resource "helm_release" "docker-node-app" {
     name  = "ingress.hosts[0].host"
     value = "kube.bsord.dev"
   }
+  set {
+    name  = "ingress.hosts[0].paths[0]"
+    value = "/"
+  }
 }
 
 resource "cloudflare_record" "kube" {
