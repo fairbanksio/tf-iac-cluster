@@ -59,6 +59,10 @@ resource "helm_release" "ingress" {
     name  = "controller.service.name"
     value = "nginx-ingress-controller"
   }
+  set {
+    name  = "controller.service.externalTrafficPolicy"
+    value = "Local"
+  }
 }
 
 ## docker-node-app
