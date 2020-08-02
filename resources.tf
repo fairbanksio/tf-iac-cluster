@@ -116,3 +116,40 @@ resource "cloudflare_record" "terraform" {
   type    = "A"
   ttl     = 1
 }
+
+## tetris
+
+resource "kubernetes_namespace" "tetris" {
+  metadata {
+    name = "tetris"
+  }
+}
+
+resource "helm_release" "tetris" {
+  repository = "https://bsord.github.io/helm-charts"
+  chart      = "tetris"
+  name       = "tetris"
+  namespace  = "tetris"
+  set {
+    name  = "ingress.enabled"
+    value = "true"
+  }
+  set {
+    name  = "ingress.hosts[0].host"
+    value = "tetris.bsord.dev"
+  }
+  set {
+    name  = "ingress.hosts[0].paths[0]"
+    value = "/"
+  }
+}
+
+# Add a record to the domain
+resource "cloudflare_record" "tetris" {
+  zone_id = var.cloudflare_zone_id
+  name    = "tetris"
+  proxied = true
+  value   = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
+  type    = "A"
+  ttl     = 1
+}
