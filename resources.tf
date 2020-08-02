@@ -74,6 +74,19 @@ resource "helm_release" "docker-node-app" {
   chart      = "docker-node-app"
   name       = "docker-node-app"
   namespace  = "docker-node-app"
+  set {
+    name  = "ingress.hosts[0].host"
+    value = "kube.bsord.dev"
+  }
+}
+
+resource "cloudflare_record" "kube" {
+  zone_id = var.cloudflare_zone_id
+  name    = "kube"
+  proxied = true
+  value   = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
+  type    = "A"
+  ttl     = 1
 }
 
 ## MongoDB
@@ -107,17 +120,7 @@ resource "helm_release" "mongodb" {
   }
 }
 
-# Add a record to the domain
-resource "cloudflare_record" "terraform" {
-  zone_id = var.cloudflare_zone_id
-  name    = "terraform"
-  proxied = true
-  value   = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
-  type    = "A"
-  ttl     = 1
-}
-
-## tetris
+## Tetris
 
 resource "kubernetes_namespace" "tetris" {
   metadata {
@@ -144,7 +147,6 @@ resource "helm_release" "tetris" {
   }
 }
 
-# Add a record to the domain
 resource "cloudflare_record" "tetris" {
   zone_id = var.cloudflare_zone_id
   name    = "tetris"
