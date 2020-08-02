@@ -63,7 +63,7 @@ resource "helm_release" "fluxcd" {
   namespace  = "fluxcd"
   set {
     name  = "git.url"
-    value = git@github.com/Fairbanks-io/flux-get-started
+    value = "git@github.com/Fairbanks-io/flux-get-started"
   }
   depends_on = [kubernetes_namespace.fluxcd]
 }
@@ -74,7 +74,7 @@ resource "helm_release" "fluxcd-helm-operator" {
   namespace  = "fluxcd"
   set {
     name  = "git.ssh.secretName"
-    value = flux-git-deploy
+    value = "flux-git-deploy"
   }
   depends_on = [kubernetes_namespace.fluxcd]
 }
