@@ -130,6 +130,18 @@ resource "helm_release" "tetris" {
   chart      = "tetris"
   name       = "tetris"
   namespace  = "tetris"
+  set {
+    name  = "ingress.enabled"
+    value = "true"
+  }
+  set {
+    name  = "ingress.hosts[0].host"
+    value = "tetris.bsord.dev"
+  }
+  set {
+    name  = "ingress.hosts[0].paths[0]"
+    value = "/"
+  }
 }
 
 # Add a record to the domain
