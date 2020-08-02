@@ -49,6 +49,36 @@ resource "helm_release" "datadog" {
   }
 }
 
+## FluxCD
+resource "kubernetes_namespace" "fluxcd" {
+  metadata {
+    name = "fluxcd"
+  }
+}
+
+resource "helm_release" "fluxcd" {
+  repository = "https://charts.fluxcd.io"
+  chart      = "flux"
+  name       = "flux"
+  namespace  = "fluxcd"
+  set {
+    name  = "git.url"
+    value = git@github.com/Fairbanks-io/flux-get-started
+  }
+  depends_on = [kubernetes_namespace.fluxcd]
+}
+resource "helm_release" "fluxcd-helm-operator" {
+  repository = "https://charts.fluxcd.io"
+  chart      = "helm-operator"
+  name       = "flux-helm-operator"
+  namespace  = "fluxcd"
+  set {
+    name  = "git.ssh.secretName"
+    value = flux-git-deploy
+  }
+  depends_on = [kubernetes_namespace.fluxcd]
+}
+
 ## Nginx 
 
 resource "helm_release" "ingress" {
