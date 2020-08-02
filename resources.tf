@@ -69,12 +69,12 @@ resource "kubernetes_namespace" "docker-node-app" {
   }
 }
 
-resource "helm_release" "docker-node-app" {
+/* resource "helm_release" "docker-node-app" {
   repository = "https://jonfairbanks.github.io/helm-charts"
   chart      = "docker-node-app"
   name       = "docker-node-app"
   namespace  = "docker-node-app"
-}
+} */
 
 ## MongoDB
 
