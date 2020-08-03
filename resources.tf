@@ -194,7 +194,7 @@ resource "kubernetes_namespace" "rr-bsord" {
     name = "rr-bsord"
   }
 }
-/*
+
 resource "helm_release" "rr-bsord" {
   repository = "https://bsord.github.io/helm-charts"
   chart      = "rr-bsord"
@@ -209,7 +209,7 @@ resource "helm_release" "rr-bsord" {
     value = "/"
   }
 }
-*/
+
 
 resource "cloudflare_record" "at-bsord-dev" {
   zone_id = var.cloudflare_zone_id
