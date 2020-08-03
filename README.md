@@ -42,7 +42,16 @@ Spin up a developer ready Kubernetes cluster in DigitalOcean using Terraform pro
 | `mongo_user` | MongoDB User Account |
 | `mongo_pw` | MongoDB User Password |
 
+5. Trigger intial plan and apply to create the state
+In the workspace, on app.terraform.io, click 'queue plan'
+Wait for the plan to complete and click 'confirm' to run the initial apply
+
+6. Set workspace type to Local
+In the workspace, on app.terraform.io, click 'settings' -> General
+Change the Execution Mode to Local. This will change the runs to complete automatically via the github action on future commits.
+
 ##### Deployment
+###### 
 ###### Automatic Deployment
   1. Commit a code change to develop Branch
   2. Watch 'github actions' of repo on github.com to validate the 'Planning' phase
