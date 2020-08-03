@@ -67,7 +67,7 @@ resource "helm_release" "ingress" {
 
 ## docker-node-app
 
-/* resource "kubernetes_namespace" "docker-node-app" {
+resource "kubernetes_namespace" "docker-node-app" {
   metadata {
     name = "docker-node-app"
   }
@@ -95,7 +95,7 @@ resource "cloudflare_record" "kube" {
   value   = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
   type    = "A"
   ttl     = 1
-} */
+}
 
 ## MongoDB
 
@@ -181,6 +181,38 @@ resource "helm_release" "tetris" {
 resource "cloudflare_record" "tetris" {
   zone_id = var.cloudflare_zone_id
   name    = "tetris"
+  proxied = true
+  value   = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
+  type    = "A"
+  ttl     = 1
+}
+
+## React Register - bsord
+
+resource "kubernetes_namespace" "rr-bsord" {
+  metadata {
+    name = "rr-bsord"
+  }
+}
+
+resource "helm_release" "rr-bsord" {
+  repository = "https://bsord.github.io/helm-charts"
+  chart      = "rr-bsord"
+  name       = "rr-bsord"
+  namespace  = "rr-bsord"
+  set {
+    name  = "ingress.hosts[0].host"
+    value = "bsord.dev"
+  }
+  set {
+    name  = "ingress.hosts[0].paths[0]"
+    value = "/"
+  }
+}
+
+resource "cloudflare_record" "at-bsord-dev" {
+  zone_id = var.cloudflare_zone_id
+  name    = "@"
   proxied = true
   value   = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
   type    = "A"
