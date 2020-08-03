@@ -128,6 +128,28 @@ resource "helm_release" "mongodb" {
   }
 }
 
+## MariaDB
+
+resource "kubernetes_namespace" "mariadb" {
+  metadata {
+    name = "mariadb"
+  }
+}
+
+resource "helm_release" "mongodb" {
+  name       = "mariadb"
+  repository = "https://charts.bitnami.com/bitnami"
+  chart      = "mariadb"
+  namespace  = "mariadb"
+  set {
+    name  = "rootUser.password"
+    value = var.mariadb_root
+  }
+  set {
+    name  = "db.user"
+    value = var.mariadb_user
+}
+
 ## Tetris
 
 resource "kubernetes_namespace" "tetris" {
