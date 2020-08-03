@@ -223,3 +223,41 @@ resource "cloudflare_record" "at-bsord-dev" {
   type    = "A"
   ttl     = 1
 }
+
+
+## Paypal Sandbox Dashboard
+
+resource "kubernetes_namespace" "paypal-sandbox-dashboard" {
+  metadata {
+    name = "paypal-sandbox-dashboard"
+  }
+}
+
+resource "helm_release" "paypal-sandbox-dashboard" {
+  repository = "https://fairbanks-io.github.io/helm-charts"
+  chart      = "paypal-sandbox-dashboard"
+  name       = "paypal-sandbox-dashboard"
+  namespace  = "paypal-sandbox-dashboard"
+  set {
+    name  = "ingress.enabled"
+    value = "true"
+  }
+  set {
+    name  = "ingress.hosts[0].host"
+    value = "sandbox.bsord.dev"
+  }
+  set {
+    name  = "ingress.hosts[0].paths[0]"
+    value = "/"
+  }
+}
+
+
+resource "cloudflare_record" "paypal-sandbox-dashboard" {
+  zone_id = var.cloudflare_zone_id
+  name    = "sandbox"
+  proxied = true
+  value   = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
+  type    = "A"
+  ttl     = 1
+}
