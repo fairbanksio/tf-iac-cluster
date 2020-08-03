@@ -46,7 +46,7 @@ Spin up a developer ready Kubernetes cluster in DigitalOcean using Terraform pro
 In the workspace, on app.terraform.io, click 'queue plan'
 Wait for the plan to complete and click 'confirm' to run the initial apply
 
-6. Set Workspace type to Local
+6. Set workspace type to Local
 In the workspace, on app.terraform.io, click 'settings' -> General
 Change the Execution Mode to Local. This will change the runs to complete automatically via the github action on future commits.
 
