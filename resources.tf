@@ -201,6 +201,10 @@ resource "helm_release" "rr-bsord" {
   name       = "rr-bsord"
   namespace  = "rr-bsord"
   set {
+    name  = "ingress.enabled"
+    value = "true"
+  }
+  set {
     name  = "ingress.hosts[0].host"
     value = "bsord.dev"
   }
