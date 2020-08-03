@@ -148,6 +148,7 @@ resource "helm_release" "mariadb" {
   set {
     name  = "db.user"
     value = var.mariadb_user
+  }
 }
 
 ## Tetris
