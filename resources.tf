@@ -141,18 +141,6 @@ resource "helm_release" "mariadb" {
   repository = "https://charts.bitnami.com/bitnami"
   chart      = "mariadb"
   namespace  = "mariadb"
-  set {
-    name  = "rootUser.password"
-    value = var.mariadb_root
-  }
-  set {
-    name  = "db.user"
-    value = var.mariadb_user
-  }
-  set {
-    name  = "volumePermissions.enabled"
-    value = true
-  }
 }
 
 ## Tetris
