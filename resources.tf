@@ -219,7 +219,7 @@ resource "cloudflare_record" "at-bsord-dev" {
 
 ## PayPal Sandbox Dashboard
 
-resource "kubernetes_namespace" "paypal-sandbox-dashboard" {
+/* resource "kubernetes_namespace" "paypal-sandbox-dashboard" {
   metadata {
     name = "paypal-sandbox-dashboard"
   }
@@ -244,7 +244,6 @@ resource "helm_release" "paypal-sandbox-dashboard" {
   }
 }
 
-
 resource "cloudflare_record" "paypal-sandbox-dashboard" {
   zone_id = var.cloudflare_zone_id
   name    = "sandbox"
@@ -252,4 +251,4 @@ resource "cloudflare_record" "paypal-sandbox-dashboard" {
   value   = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
   type    = "A"
   ttl     = 1
-}
+} */
