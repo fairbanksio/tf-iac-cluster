@@ -149,6 +149,10 @@ resource "helm_release" "mariadb" {
     name  = "db.user"
     value = var.mariadb_user
   }
+  set {
+    name  = "volumePermissions.enabled"
+    value = true
+  }
 }
 
 ## Tetris
@@ -225,7 +229,7 @@ resource "cloudflare_record" "at-bsord-dev" {
 }
 
 
-## Paypal Sandbox Dashboard
+## PayPal Sandbox Dashboard
 
 resource "kubernetes_namespace" "paypal-sandbox-dashboard" {
   metadata {
