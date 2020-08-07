@@ -7,7 +7,7 @@
 
 ### Terraform Plans
 
-Spin up a developer ready Kubernetes cluster in DigitalOcean using Terraform protected by CloudFlare with monitoring/logging available in DataDog.
+Spin up a developer ready Kubernetes cluster in DigitalOcean using Terraform. Protected by CloudFlare; monitored with Datadog.
 
 ##### Prerequisites
 - [A Terraform Cloud API key](https://www.terraform.io/docs/cloud/users-teams-organizations/api-tokens.html)
