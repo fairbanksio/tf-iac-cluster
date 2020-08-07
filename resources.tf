@@ -234,14 +234,6 @@ resource "helm_release" "vault" {
     value = "true"
   }
   set {
-    name  = "ui.externalPort"
-    value = "8200"
-  }
-  set {
-    name  = "ui.serviceType"
-    value = "ClusterIP"
-  }
-  set {
     name  = "ingress.Enabled"
     value = "true"
   }
@@ -263,6 +255,7 @@ resource "cloudflare_record" "vault" {
   type    = "A"
   ttl     = 1
 }
+
 ## PayPal Sandbox Dashboard
 
 /* resource "kubernetes_namespace" "paypal-sandbox-dashboard" {
