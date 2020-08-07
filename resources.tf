@@ -233,6 +233,14 @@ resource "helm_release" "vault" {
     name  = "ui.enabled"
     value = "true"
   }
+  set {
+    name  = "ui.externalPort"
+    value = "8200"
+  }
+  set {
+    name  = "ui.serviceType"
+    value = "ClusterIP"
+  }
 }
 
 ## PayPal Sandbox Dashboard
