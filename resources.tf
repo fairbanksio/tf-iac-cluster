@@ -241,7 +241,27 @@ resource "helm_release" "vault" {
     name  = "ui.serviceType"
     value = "ClusterIP"
   }
+  set {
+    name  = "ingress.Enabled"
+    value = "true"
+  }
+  set {
+    name  = "ingress.hosts[0].host"
+    value = "vault.bsord.dev"
+  }
+  set {
+    name  = "ingress.hosts[0].paths[0]"
+    value = "/"
+  }
 }
+
+resource "cloudflare_record" "vault" {
+  zone_id = var.cloudflare_zone_id
+  name    = "vault"
+  proxied = true
+  value   = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
+  type    = "A"
+  ttl     = 1
 
 ## PayPal Sandbox Dashboard
 
