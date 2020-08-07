@@ -206,6 +206,20 @@ resource "helm_release" "rr-bsord" {
   }
 }
 
+## Hashicorp Vault
+
+resource "kubernetes_namespace" "vault" {
+  metadata {
+    name = "vault"
+  }
+}
+
+resource "helm_release" "vault" {
+  repository = "https://helm.releases.hashicorp.com"
+  chart      = "vault"
+  name       = "vault"
+  namespace  = "vault"
+}
 
 resource "cloudflare_record" "at-bsord-dev" {
   zone_id = var.cloudflare_zone_id
