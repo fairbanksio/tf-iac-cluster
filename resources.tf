@@ -206,6 +206,16 @@ resource "helm_release" "rr-bsord" {
   }
 }
 
+resource "cloudflare_record" "at-bsord-dev" {
+  zone_id = var.cloudflare_zone_id
+  name    = "@"
+  proxied = true
+  value   = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
+  type    = "A"
+  ttl     = 1
+}
+
+
 ## Hashicorp Vault
 
 resource "kubernetes_namespace" "vault" {
@@ -219,17 +229,11 @@ resource "helm_release" "vault" {
   chart      = "vault"
   name       = "vault"
   namespace  = "vault"
+  set {
+    name  = "ui.enabled"
+    value = "true"
+  }
 }
-
-resource "cloudflare_record" "at-bsord-dev" {
-  zone_id = var.cloudflare_zone_id
-  name    = "@"
-  proxied = true
-  value   = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
-  type    = "A"
-  ttl     = 1
-}
-
 
 ## PayPal Sandbox Dashboard
 
