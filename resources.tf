@@ -128,19 +128,44 @@ resource "helm_release" "mongodb" {
   }
 }
 
-## MariaDB
+## Nextcloud
 
-resource "kubernetes_namespace" "mariadb" {
+resource "kubernetes_namespace" "nextcloud" {
   metadata {
-    name = "mariadb"
+    name = "nextcloud"
   }
 }
 
-resource "helm_release" "mariadb" {
-  name       = "mariadb"
-  repository = "https://charts.bitnami.com/bitnami"
-  chart      = "mariadb"
-  namespace  = "mariadb"
+resource "helm_release" "nextcloud" {
+  name       = "nextcloud"
+  repository = "https://kubernetes-charts.storage.googleapis.com"
+  chart      = "nextcloud"
+  namespace  = "nextcloud"
+  set {
+    name  = "ingress.enabled"
+    value = "true"
+  }  
+  set {
+    name  = "ingress.hosts[0].host"
+    value = "files.bsord.dev"
+  }
+  set {
+    name  = "ingress.hosts[0].paths[0]"
+    value = "/"
+  }
+  set {
+    name  = "mariadb.enabled"
+    value = "true"
+  }
+}
+
+resource "cloudflare_record" "files" {
+  zone_id = var.cloudflare_zone_id
+  name    = "files"
+  proxied = true
+  value   = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
+  type    = "A"
+  ttl     = 1
 }
 
 ## Tetris
