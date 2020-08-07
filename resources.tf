@@ -144,7 +144,7 @@ resource "helm_release" "nextcloud" {
   set {
     name  = "ingress.enabled"
     value = "true"
-  }  
+  }
   set {
     name  = "ingress.hosts[0].host"
     value = "files.bsord.dev"
@@ -287,6 +287,7 @@ resource "cloudflare_record" "vault" {
   value   = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
   type    = "A"
   ttl     = 1
+}
 
 ## PayPal Sandbox Dashboard
 
