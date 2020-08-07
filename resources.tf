@@ -263,11 +263,11 @@ resource "helm_release" "vault" {
     value = "true"
   }
   set {
-    name  = "ingress.hosts[0].host"
+    name  = "server.ingress.hosts[0].host"
     value = "vault.bsord.dev"
   }
   set {
-    name  = "ingress.hosts[0].paths[0]"
+    name  = "server.ingress.hosts[0].paths[0]"
     value = "/"
   }
 }
