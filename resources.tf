@@ -80,7 +80,7 @@ resource "helm_release" "docker-node-app" {
   namespace  = "docker-node-app"
   set {
     name  = "ingress.hosts[0].host"
-    value = "kube.bsord.dev"
+    value = cloudflare_record.kube.hostname
   }
   set {
     name  = "ingress.hosts[0].paths[0]"
@@ -147,7 +147,7 @@ resource "helm_release" "nextcloud" {
   }
   set {
     name  = "nextcloud.host"
-    value = "files.bsord.dev"
+    value = cloudflare_record.files.hostname
   }
   set {
     name  = "ingress.hosts[0].paths[0]"
@@ -195,7 +195,7 @@ resource "helm_release" "tetris" {
   }
   set {
     name  = "ingress.hosts[0].host"
-    value = "tetris.bsord.dev"
+    value = cloudflare_record.tetris.hostname
   }
   set {
     name  = "ingress.hosts[0].paths[0]"
@@ -231,7 +231,7 @@ resource "helm_release" "rr-bsord" {
   }
   set {
     name  = "ingress.hosts[0].host"
-    value = "bsord.dev"
+    value = cloudflare_record.at-bsord-dev.hostname
   }
   set {
     name  = "ingress.hosts[0].paths[0]"
@@ -272,7 +272,7 @@ resource "helm_release" "vault" {
   }
   set {
     name  = "server.ingress.hosts[0].host"
-    value = "vault.bsord.dev"
+    value = cloudflare_record.vault.hostname
   }
   set {
     name  = "server.ingress.hosts[0].paths[0]"
