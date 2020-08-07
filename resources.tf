@@ -144,7 +144,7 @@ resource "helm_release" "nextcloud" {
   set {
     name  = "ingress.enabled"
     value = "true"
-  }  
+  }
   set {
     name  = "ingress.hosts[0].host"
     value = "files.bsord.dev"
