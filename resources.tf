@@ -259,14 +259,6 @@ resource "helm_release" "vault" {
     value = "true"
   }
   set {
-    name  = "ui.externalPort"
-    value = "8200"
-  }
-  set {
-    name  = "ui.serviceType"
-    value = "ClusterIP"
-  }
-  set {
     name  = "ingress.Enabled"
     value = "true"
   }
