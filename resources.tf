@@ -262,7 +262,7 @@ resource "cloudflare_record" "vault" {
   value   = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
   type    = "A"
   ttl     = 1
-
+}
 ## PayPal Sandbox Dashboard
 
 /* resource "kubernetes_namespace" "paypal-sandbox-dashboard" {
