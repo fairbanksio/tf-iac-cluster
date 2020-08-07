@@ -157,6 +157,14 @@ resource "helm_release" "nextcloud" {
     name  = "mariadb.enabled"
     value = "true"
   }
+  set {
+    name  = "volumePermissions.enabled"
+    value = "true"
+  }
+  set {
+    name  = "externalDatabase.enabled"
+    value = "true"
+  }
 }
 
 resource "cloudflare_record" "files" {
