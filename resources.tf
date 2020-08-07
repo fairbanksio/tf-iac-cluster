@@ -165,6 +165,10 @@ resource "helm_release" "nextcloud" {
     name  = "externalDatabase.enabled"
     value = "true"
   }
+  set {
+    name  = "internalDatabase.enabled"
+    value = "false"
+  }
 }
 
 resource "cloudflare_record" "files" {
