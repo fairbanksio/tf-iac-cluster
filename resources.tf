@@ -259,7 +259,7 @@ resource "helm_release" "vault" {
     value = "true"
   }
   set {
-    name  = "ingress.Enabled"
+    name  = "server.ingress.enabled"
     value = "true"
   }
   set {
