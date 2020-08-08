@@ -186,7 +186,7 @@ resource "helm_release" "nextcloud" {
     value = "false"
   }
   set {
-    name  = "deploymentSnnotations"
+    name  = "deploymentAnnotations"
     value = [
       vault.hashicorp.com/agent-inject: "true",
       vault.hashicorp.com/role: "internal-app",
