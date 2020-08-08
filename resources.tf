@@ -185,6 +185,18 @@ resource "helm_release" "nextcloud" {
     name  = "internalDatabase.enabled"
     value = "false"
   }
+  set {
+    name  = "deploymentSnnotations"
+    set   = [
+      vault.hashicorp.com/agent-inject: "true",
+      vault.hashicorp.com/role: "internal-app",
+      vault.hashicorp.com/agent-inject-secret-database-config.txt: "internal/data/database/config"
+      vault.hashicorp.com/agent-inject-template-database-config.txt: |
+        {{- with secret "internal/data/database/config" -}}
+        postgresql://{{ .Data.data.username }}:{{ .Data.data.password }}@postgres:5432/wizard
+        {{- end -}}
+    ]
+  }
 }
 
 resource "cloudflare_record" "files" {
