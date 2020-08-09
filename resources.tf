@@ -186,12 +186,16 @@ resource "helm_release" "nextcloud" {
     value = "false"
   }
   set {
-    name = "deploymentAnnotations"
-    value = {
-      "vault.hashicorp.com/agent-inject: true",
-      "vault.hashicorp.com/role: internal-app",
-      "vault.hashicorp.com/agent-inject-secret-database-config.txt : internal/data/database/config"
-    }
+    name  = "deploymentAnnotations[0]"
+    value = "vault.hashicorp.com/agent-inject: true"
+  }
+  set {
+    name  = "deploymentAnnotations[1]"
+    value = "vault.hashicorp.com/role:internal-app"
+  }
+  set {
+    name  = "deploymentAnnotations[2]"
+    value = "vault.hashicorp.com/agent-inject-secret-database-config.txt : internal/data/database/config"
   }
 }
 
