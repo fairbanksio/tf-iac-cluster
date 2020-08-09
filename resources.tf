@@ -17,6 +17,14 @@ resource "digitalocean_spaces_bucket" "static-assets" {
   region = "sfo2"
 }
 
+## kube-state-metrics
+
+resource "helm_release" "kube-state-metrics" {
+  name       = "kube-state-metrics"
+  repository = "https://kubernetes-charts.storage.googleapis.com"
+  chart      = "kube-state-metrics"
+}
+
 ## Keel
 
 resource "helm_release" "keel" {
