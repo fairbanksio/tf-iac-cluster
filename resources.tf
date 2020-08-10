@@ -46,7 +46,7 @@ resource "kubernetes_namespace" "datadog" {
   }
 }
 
-resource "helm_release" "datadog" {
+/* resource "helm_release" "datadog" {
   repository = "https://kubernetes-charts.storage.googleapis.com"
   chart      = "datadog"
   name       = "datadog"
@@ -63,7 +63,7 @@ resource "helm_release" "datadog" {
     name  = "processAgent.processCollection"
     value = "true"
   }
-}
+} */
 
 ## Nginx 
 
