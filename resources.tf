@@ -55,6 +55,14 @@ resource "helm_release" "datadog" {
     name  = "datadog.apiKey"
     value = var.dd_api_key
   }
+  set {
+    name  = "processAgent.enabled"
+    value = "true"
+  }
+  set {
+    name  = "processAgent.processCollection"
+    value = "true"
+  }
 }
 
 ## Nginx 
