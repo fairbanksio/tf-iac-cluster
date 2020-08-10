@@ -56,11 +56,11 @@ resource "helm_release" "datadog" {
     value = var.dd_api_key
   }
   set {
-    name  = "processAgent.enabled"
+    name  = "datadog.processAgent.enabled"
     value = "true"
   }
   set {
-    name  = "processAgent.processCollection"
+    name  = "datadog.processAgent.processCollection"
     value = "true"
   }
 }
@@ -200,10 +200,6 @@ resource "helm_release" "nextcloud" {
   set {
     name  = "internalDatabase.enabled"
     value = "false"
-  }
-  set {
-    name  = "rootPassword"
-    value = "vault.security/vault-path: 'secret/data/foo'"
   }
 }
 
