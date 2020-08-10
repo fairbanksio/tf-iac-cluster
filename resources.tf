@@ -46,7 +46,7 @@ resource "kubernetes_namespace" "datadog" {
   }
 }
 
-/* resource "helm_release" "datadog" {
+resource "helm_release" "datadog" {
   repository = "https://kubernetes-charts.storage.googleapis.com"
   chart      = "datadog"
   name       = "datadog"
@@ -63,7 +63,7 @@ resource "kubernetes_namespace" "datadog" {
     name  = "processAgent.processCollection"
     value = "true"
   }
-} */
+}
 
 ## Nginx 
 
@@ -200,6 +200,10 @@ resource "helm_release" "nextcloud" {
   set {
     name  = "internalDatabase.enabled"
     value = "false"
+  }
+  set {
+    name  = "rootPassword"
+    value = "vault.security/vault-path: 'secret/data/foo'"
   }
 }
 
