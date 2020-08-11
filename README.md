@@ -51,7 +51,9 @@ In the workspace, on app.terraform.io, click 'settings' -> General
 Change the Execution Mode to Local. This will change the runs to complete automatically via the github action on future commits.
 
 ##### Deployment
-###### 
+###### Pre-reqs:
+  1. Hashicorp/Vault (optional)
+  
 ###### Automatic Deployment
   1. Commit a code change to develop Branch
   2. Watch 'github actions' of repo on github.com to validate the 'Planning' phase

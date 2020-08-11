@@ -7,7 +7,7 @@ terraform {
     organization = "Fairbanks-io"
 
     workspaces {
-      name = "k8s-prod-us-sfo"
+      name = "tf-iac-cluster"
     }
   }
 }
