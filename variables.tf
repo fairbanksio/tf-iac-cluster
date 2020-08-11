@@ -10,5 +10,3 @@ variable "cloudflare_zone_id" {}
 variable "mongo_root" {}
 variable "mongo_user" {}
 variable "mongo_pw" {}
-variable "mariadb_root" {}
-variable "mariadb_user" {}
