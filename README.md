@@ -4,6 +4,7 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/jonfairbanks/terraform.svg)
 ![Terraform](https://github.com/jonfairbanks/terraform/workflows/Terraform/badge.svg?branch=master)
 ![License](https://img.shields.io/github/license/jonfairbanks/terraform.svg?style=flat)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)
 
 ### Terraform Plans
 
