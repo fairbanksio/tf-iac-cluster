@@ -95,6 +95,14 @@ resource "helm_release" "ingress" {
     name  = "controller.config.proxy-read-timeout"
     value = "60s"
   }
+  set {
+    name  = "controller.config.enable-real-ip"
+    value = "true"
+  }
+  set {
+    name  = "controller.config.use-forwarded-headers"
+    value = "true"
+  }
 }
 
 ## MongoDB
