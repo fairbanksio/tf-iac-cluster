@@ -97,7 +97,7 @@ resource "helm_release" "ingress" {
   }
   set {
     name  = "controller.config.enable-real-ip"
-    value = '"true"'
+    value = ""true""
   }
 }
 
