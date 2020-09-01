@@ -99,7 +99,7 @@ resource "helm_release" "ingress" {
 
 ## MongoDB
 
-resource "kubernetes_namespace" "mongodb" {
+/* resource "kubernetes_namespace" "mongodb" {
   metadata {
     name = "mongodb"
   }
@@ -126,4 +126,4 @@ resource "helm_release" "mongodb" {
     name  = "mongodbDatabase"
     value = var.do_cluster_name
   }
-}
+} */
