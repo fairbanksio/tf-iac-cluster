@@ -95,6 +95,22 @@ resource "helm_release" "ingress" {
     name  = "controller.config.proxy-read-timeout"
     value = "60s"
   }
+  set {
+    name  = "controller.config.proxy-read-timeout"
+    value = "60s"
+  }
+  set {
+    name  = "defaultBackend.image.repository"
+    value = "fairbanksio/pretty-default-backend"
+  }
+  set {
+    name  = "defaultBackend.image.tag"
+    value = "latest"
+  }
+  set {
+    name  = "defaultBackend.port"
+    value = "80"
+  }
 }
 
 ## MongoDB
