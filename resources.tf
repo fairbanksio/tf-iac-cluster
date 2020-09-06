@@ -76,6 +76,11 @@ resource "helm_release" "ingress" {
     value = "nginx-ingress-controller"
   }
   set {
+    name  = "controller.config.custom-http-errors"
+    value = "404"
+    type  = "string"
+  }
+  set {
     name  = "defaultBackend.enabled"
     value = "false"
   }
