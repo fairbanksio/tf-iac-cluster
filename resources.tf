@@ -76,6 +76,26 @@ resource "helm_release" "ingress" {
     value = "nginx-ingress-controller"
   }
   set {
+    name  = "controller.service.externalTrafficPolicy"
+    value = "Local"
+  }
+  set {
+    name  = "controller.config.proxy-body-size"
+    value = "250m"
+  }
+  set {
+    name  = "controller.config.client-max-body-size"
+    value = "250m"
+  }
+  set {
+    name  = "controller.config.proxy-connect-timeout"
+    value = "60"
+  }
+  set {
+    name  = "controller.config.proxy-read-timeout"
+    value = "60"
+  }
+  set {
     name  = "controller.config.custom-http-errors"
     value = "404"
     type  = "string"
@@ -95,6 +115,10 @@ resource "helm_release" "pretty-default-backend" {
   repository = "https://h.cfcr.io/fairbanks.io/default"
   chart      = "pretty-default-backend"
   namespace  = "default"
+  set {
+    name  = "bgColor"
+    value = "#334455"
+  }
 }
 
 ## MongoDB
