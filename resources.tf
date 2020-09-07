@@ -90,14 +90,11 @@ resource "helm_release" "ingress" {
   set {
     name  = "controller.config.proxy-connect-timeout"
     value = "60"
+    type  = "string"
   }
   set {
     name  = "controller.config.proxy-read-timeout"
     value = "60"
-  }
-  set {
-    name  = "controller.config.custom-http-errors"
-    value = "404"
     type  = "string"
   }
   set {
@@ -118,6 +115,10 @@ resource "helm_release" "pretty-default-backend" {
   set {
     name  = "bgColor"
     value = "#334455"
+  }
+  set {
+    name  = "brandingText"
+    value = "bsord.dev/fairbanks.dev"
   }
 }
 
