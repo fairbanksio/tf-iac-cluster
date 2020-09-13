@@ -25,19 +25,6 @@ resource "helm_release" "kube-state-metrics" {
   chart      = "kube-state-metrics"
 }
 
-## Keel
-
-resource "helm_release" "keel" {
-  name       = "keel"
-  repository = "https://charts.keel.sh"
-  chart      = "keel"
-  namespace  = "kube-system"
-  set {
-    name  = "helmProvider.version"
-    value = "v3"
-  }
-}
-
 ## Datadog 
 
 resource "kubernetes_namespace" "datadog" {
@@ -51,7 +38,7 @@ resource "helm_release" "datadog" {
   chart      = "datadog"
   name       = "datadog"
   namespace  = "datadog"
-  set {
+  set_sensitive {
     name  = "datadog.apiKey"
     value = var.dd_api_key
   }
@@ -121,34 +108,3 @@ resource "helm_release" "pretty-default-backend" {
     value = "bsord.dev/fairbanks.dev"
   }
 }
-
-## MongoDB
-
-/* resource "kubernetes_namespace" "mongodb" {
-  metadata {
-    name = "mongodb"
-  }
-}
-
-resource "helm_release" "mongodb" {
-  name       = "mongodb"
-  repository = "https://charts.bitnami.com/bitnami"
-  chart      = "mongodb-sharded"
-  namespace  = "mongodb"
-  set {
-    name  = "mongodbRootPassword"
-    value = var.mongo_root
-  }
-  set {
-    name  = "mongodbUsername"
-    value = var.mongo_user
-  }
-  set {
-    name  = "mongodbPassword"
-    value = var.mongo_pw
-  }
-  set {
-    name  = "mongodbDatabase"
-    value = var.do_cluster_name
-  }
-} */
