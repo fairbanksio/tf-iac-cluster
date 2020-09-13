@@ -67,6 +67,15 @@ resource "helm_release" "ingress" {
     value = "Local"
   }
   set {
+    name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/do-loadbalancer-enable-proxy-protocol"
+    value = "true"
+  }
+  set {
+    name  = "controller.config.use-proxy-protocol"
+    value = "true"
+    type  = "string"
+  }
+  set {
     name  = "controller.config.proxy-body-size"
     value = "250m"
   }
