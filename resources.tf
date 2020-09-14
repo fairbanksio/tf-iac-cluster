@@ -25,6 +25,14 @@ resource "helm_release" "kube-state-metrics" {
   chart      = "kube-state-metrics"
 }
 
+## Metrics Server
+
+resource "helm_release" "metrics-server" {
+  name       = "metrics-server"
+  repository = "https://charts.bitnami.com/bitnami"
+  chart      = "metrics-server"
+}
+
 ## Datadog 
 
 resource "kubernetes_namespace" "datadog" {
