@@ -70,9 +70,15 @@ resource "helm_release" "ingress" {
     name  = "controller.service.name"
     value = "nginx-ingress-controller"
   }
+
   set {
-    name  = "controller.service.externalTrafficPolicy"
-    value = "Local"
+    name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/do-loadbalancer-enable-proxy-protocol"
+    value = "true"
+  }
+  set {
+    name  = "controller.config.use-proxy-protocol"
+    value = "true"
+    type  = "string"
   }
   set {
     name  = "controller.config.proxy-body-size"
