@@ -11,3 +11,4 @@ variable "cloudflare_zone_id_fairbanks" {}
 variable "mongo_root" {}
 variable "mongo_user" {}
 variable "mongo_pw" {}
+variable "grafana_password" {}
