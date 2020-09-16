@@ -85,6 +85,10 @@ resource "helm_release" "grafana" {
     name  = "admin.password"
     value = var.grafana_password
   }
+  set {
+    name  = "admin.existingSecret"
+    value = "grafana-admin"
+  }
 }
 
 resource "cloudflare_record" "grafana" {
