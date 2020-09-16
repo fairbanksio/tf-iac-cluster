@@ -60,6 +60,38 @@ resource "helm_release" "datadog" {
   }
 }
 
+## Grafana 
+
+resource "kubernetes_namespace" "grafana" {
+  metadata {
+    name = "grafana"
+  }
+}
+
+resource "helm_release" "grafana" {
+  repository = "https://charts.bitnami.com/bitnami"
+  chart      = "grafana"
+  name       = "grafana"
+  namespace  = "grafana"
+  set {
+    name  = "ingress.enabled"
+    value = "true"
+  }
+  set {
+    name  = "ingress.hosts[0].name"
+    value = cloudflare_record.grafana.hostname
+  }
+}
+
+resource "cloudflare_record" "grafana" {
+  zone_id = var.cloudflare_zone_id_fairbanks
+  name    = "grafana"
+  proxied = true
+  value   = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
+  type    = "A"
+  ttl     = 1
+}
+
 ## Nginx 
 
 resource "helm_release" "ingress" {
