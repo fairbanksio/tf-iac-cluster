@@ -81,14 +81,6 @@ resource "helm_release" "grafana" {
     name  = "ingress.hosts[0].name"
     value = cloudflare_record.grafana.hostname
   }
-  set_sensitive {
-    name  = "admin.password"
-    value = var.grafana_password
-  }
-  set {
-    name  = "admin.existingSecret"
-    value = "grafana-admin"
-  }
 }
 
 resource "cloudflare_record" "grafana" {
