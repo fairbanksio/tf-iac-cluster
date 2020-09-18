@@ -58,6 +58,30 @@ resource "helm_release" "datadog" {
     name  = "datadog.processAgent.processCollection"
     value = "true"
   }
+  set {
+    name  = "datadog.nodeLabelsAsTags"
+    value = "true"
+  }
+  set {
+    name  = "datadog.podAnnotationsAsTags"
+    value = "true"
+  }
+  set {
+    name  = "datadog.podLabelsAsTags"
+    value = "true"
+  }
+  set {
+    name  = "datadog.apm.enabled"
+    value = "true"
+  }
+  set {
+    name  = "datadog.dogstatsd.nonLocalTraffic"
+    value = "true"
+  }
+  set {
+    name  = "datadog.dogstatsd.useHostPort"
+    value = "true"
+  }
 }
 
 ## Grafana 
