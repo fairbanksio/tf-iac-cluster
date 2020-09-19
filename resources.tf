@@ -82,6 +82,10 @@ resource "helm_release" "datadog" {
     name  = "datadog.dogstatsd.useHostPort"
     value = "true"
   }
+  set {
+    name  = "datadog.systemProbe.enabled"
+    value = "true"
+  }
 }
 
 ## Grafana 
