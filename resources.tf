@@ -186,9 +186,9 @@ resource "helm_release" "pretty-default-backend" {
 
 ## Prometheus
 
-resource "kubernetes_namespace" "metrics" {
+resource "kubernetes_namespace" "prom-metrics" {
   metadata {
-    name = "metrics"
+    name = "prom-metrics"
   }
 }
 
@@ -196,7 +196,7 @@ resource "helm_release" "prometheus" {
   repository = "https://kubernetes-charts.storage.googleapis.com"
   chart      = "prometheus-operator"
   name       = "prometheus"
-  namespace  = "metrics"
+  namespace  = "prom-metrics"
   set {
     name  = "grafana.ingress.enabled"
     value = "true"
