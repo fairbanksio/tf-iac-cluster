@@ -183,39 +183,3 @@ resource "helm_release" "pretty-default-backend" {
   }
 }
 
-
-## Prometheus
-
-resource "kubernetes_namespace" "prom-metrics" {
-  metadata {
-    name = "prom-metrics"
-  }
-}
-
-resource "helm_release" "prometheus" {
-  repository = "https://kubernetes-charts.storage.googleapis.com"
-  chart      = "prometheus-operator"
-  name       = "prometheus"
-  namespace  = "prom-metrics"
-  set {
-    name  = "grafana.ingress.enabled"
-    value = "true"
-  }
-  set {
-    name  = "grafana.ingress.hosts[0]"
-    value = cloudflare_record.metrics.hostname
-  }
-  set_sensitive {
-    name  = "grafana.adminPassword"
-    value = var.grafana_password
-  }
-}
-
-resource "cloudflare_record" "metrics" {
-  zone_id = var.cloudflare_zone_id
-  name    = "metrics"
-  proxied = true
-  value   = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
-  type    = "A"
-  ttl     = 1
-}
