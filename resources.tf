@@ -203,7 +203,7 @@ resource "helm_release" "prometheus" {
   }
   set {
     name  = "grafana.ingress.hosts[0]"
-    value = cloudflare_record.grafana.hostname
+    value = cloudflare_record.metrics.hostname
   }
   set_sensitive {
     name  = "grafana.adminPassword"
