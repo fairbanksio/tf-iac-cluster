@@ -30,7 +30,7 @@ terraform {
       source  = "hashicorp/helm"
       version = "~> 1.3.0"
     }
-    
+
   }
 }
 
