@@ -39,9 +39,6 @@ Spin up a developer ready Kubernetes cluster in DigitalOcean using Terraform. Pr
 | `cloudflare_email` | Cloudflare Account Email |
 | `cloudflare_api_key` | GLOBAL API key for Cloudflare (not token) |
 | `cloudflare_zone_id` | ZoneID used to create DNS record |
-| `mongo_root` | MongoDB Root Password |
-| `mongo_user` | MongoDB User Account |
-| `mongo_pw` | MongoDB User Password |
 
 5. Trigger intial plan and apply to create the state
 In the workspace, on app.terraform.io, click 'queue plan'
