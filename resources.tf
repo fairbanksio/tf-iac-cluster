@@ -156,7 +156,7 @@ resource "helm_release" "pretty-default-backend" {
 resource "helm_release" "argo-cd" {
   name       = "argo-cd"
   repository = "https://argoproj.github.io/argo-helm"
-  chart      = "argo/argo-cd"
+  chart      = "argo-cd"
   set {
     name  = "installCRDs"
     value = "false"
