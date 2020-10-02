@@ -22,7 +22,7 @@ resource "digitalocean_kubernetes_cluster" "k8s" {
 resource "helm_release" "metrics-server" {
   name       = "metrics-server"
   repository = "https://kubernetes-charts.storage.googleapis.com"
-  chart      = "metrics-server"
+  chart      = "stable/metrics-server"
   set {
     name  = "hostNetwork.enabled"
     value = "true"
