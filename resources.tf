@@ -150,8 +150,15 @@ resource "helm_release" "pretty-default-backend" {
 
 ## Argo CD
 
+resource "kubernetes_namespace" "argo-cd" {
+  metadata {
+    name = "argo-cd"
+  }
+}
+
 resource "helm_release" "argo-cd" {
   name       = "argo-cd"
+  namespace  = "argo-cd"
   repository = "https://argoproj.github.io/argo-helm"
   chart      = "argo-cd"
   set {
