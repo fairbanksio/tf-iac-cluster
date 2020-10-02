@@ -12,6 +12,7 @@ resource "digitalocean_kubernetes_cluster" "k8s" {
   }
 }
 
+## Spaces
 #resource "digitalocean_spaces_bucket" "static-assets" {
 #  name   = var.do_space_name
 #  region = "sfo2"
