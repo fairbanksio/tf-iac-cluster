@@ -159,28 +159,3 @@ resource "helm_release" "argo-cd" {
   }
 }
 
-## Log stack
-
-resource "kubernetes_namespace" "logging" {
-  metadata {
-    name = "logging"
-  }
-}
-
-resource "helm_release" "logging" {
-  name       = "logging"
-  repository = "https://kubernetes-charts.storage.googleapis.com"
-  chart      = "elastic-stack"
-  set {
-    name  = "logstash.enabled"
-    value = "false"
-  }
-  set {
-    name  = "fluentd.enabled"
-    value = "true"
-  }
-  set {
-    name  = "fluentd-elasticsearch.enabled"
-    value = "true"
-  }
-}
