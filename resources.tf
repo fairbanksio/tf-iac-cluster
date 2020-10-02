@@ -17,6 +17,13 @@ resource "digitalocean_kubernetes_cluster" "k8s" {
 #  region = "sfo2"
 #}
 
+## Metrics Server
+
+resource "helm_release" "metrics-server" {
+  name       = "metrics-server"
+  repository = "https://charts.bitnami.com/bitnami"
+  chart      = "metrics-server"
+}
 
 ## Datadog 
 
