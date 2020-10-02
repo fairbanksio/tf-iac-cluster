@@ -3,7 +3,7 @@ resource "digitalocean_kubernetes_cluster" "k8s" {
   name         = var.do_cluster_name
   region       = "sfo2"
   auto_upgrade = false
-  version      = "1.18.8-do.0"
+  version      = "1.18.8-do.1"
 
   node_pool {
     name       = "worker-pool"
@@ -12,6 +12,7 @@ resource "digitalocean_kubernetes_cluster" "k8s" {
   }
 }
 
+## Spaces
 #resource "digitalocean_spaces_bucket" "static-assets" {
 #  name   = var.do_space_name
 #  region = "sfo2"
