@@ -17,21 +17,6 @@ resource "digitalocean_kubernetes_cluster" "k8s" {
 #  region = "sfo2"
 #}
 
-## kube-state-metrics
-
-resource "helm_release" "kube-state-metrics" {
-  name       = "kube-state-metrics"
-  repository = "https://kubernetes-charts.storage.googleapis.com"
-  chart      = "kube-state-metrics"
-}
-
-## Metrics Server
-
-resource "helm_release" "metrics-server" {
-  name       = "metrics-server"
-  repository = "https://charts.bitnami.com/bitnami"
-  chart      = "metrics-server"
-}
 
 ## Datadog 
 
