@@ -7,8 +7,8 @@ resource "digitalocean_kubernetes_cluster" "k8s" {
 
   node_pool {
     name       = "worker-pool"
-    size       = "s-2vcpu-2gb"
-    node_count = 4
+    size       = "s-4vcpu-8gb"
+    node_count = 2
   }
 }
 
