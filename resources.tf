@@ -167,3 +167,55 @@ resource "helm_release" "argo-cd" {
   }
 }
 
+
+## Loki-Stack
+
+resource "kubernetes_namespace" "monitoring" {
+  metadata {
+    name = "monitoring"
+  }
+}
+
+resource "helm_release" "loki-stack" {
+  name       = "loki-stack"
+  namespace  = "monitoring"
+  repository = "https://grafana.github.io/loki/charts"
+  chart      = "loki-stack"
+  set {
+    name  = "grafana.enabled"
+    value = "true"
+  }
+  set {
+    name  = "prometheus.enabled"
+    value = "true"
+  }
+  set {
+    name  = "prometheus.alertmanager.persistentVolume.enabled"
+    value = "false"
+  }
+  set {
+    name  = "prometheus.server.persistentVolume.enabled"
+    value = "false"
+  }
+  set {
+    name  = "grafana.ingress.enabled"
+    value = "true"
+  }
+  set {
+    name  = "grafana.ingress.hosts[0].name"
+    value = cloudflare_record.monitor.hostname
+  }
+  set_sensitive {
+    name  = "grafana.adminPassword"
+    value = var.grafana_password
+  }
+}
+
+resource "cloudflare_record" "monitor" {
+  zone_id = var.cloudflare_zone_id
+  name    = "monitor"
+  proxied = true
+  value   = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
+  type    = "A"
+  ttl     = 1
+}
