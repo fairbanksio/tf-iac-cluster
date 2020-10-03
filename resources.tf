@@ -168,7 +168,7 @@ resource "helm_release" "argo-cd" {
 }
 
 
-## Loki-Stack
+## Monitoring
 
 resource "kubernetes_namespace" "monitoring" {
   metadata {
@@ -176,17 +176,13 @@ resource "kubernetes_namespace" "monitoring" {
   }
 }
 
-resource "helm_release" "loki-stack" {
-  name       = "loki-stack"
+resource "helm_release" "kube-prom-stack" {
+  name       = "kube-prom-stack"
   namespace  = "monitoring"
-  repository = "https://grafana.github.io/loki/charts"
-  chart      = "loki-stack"
+  repository = "https://prometheus-community.github.io/helm-charts"
+  chart      = "kube-prometheus-stack"
   set {
     name  = "grafana.enabled"
-    value = "true"
-  }
-  set {
-    name  = "prometheus.enabled"
     value = "true"
   }
   set {
@@ -196,6 +192,10 @@ resource "helm_release" "loki-stack" {
   set {
     name  = "prometheus.server.persistentVolume.enabled"
     value = "false"
+  }
+  set {
+    name  = "grafana.plugins[0]"
+    value = "grafana-piechart-panel"
   }
   set {
     name  = "grafana.ingress.enabled"
@@ -209,6 +209,13 @@ resource "helm_release" "loki-stack" {
     name  = "grafana.adminPassword"
     value = var.grafana_password
   }
+}
+
+resource "helm_release" "loki-stack" {
+  name       = "loki-stack"
+  namespace  = "monitoring"
+  repository = "https://grafana.github.io/loki/charts"
+  chart      = "loki-stack"
 }
 
 resource "cloudflare_record" "monitor" {
