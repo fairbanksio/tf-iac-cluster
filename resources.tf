@@ -168,7 +168,7 @@ resource "helm_release" "argo-cd" {
 }
 
 
-## Monitoring
+/* ## Monitoring
 
 resource "kubernetes_namespace" "monitoring" {
   metadata {
@@ -254,4 +254,4 @@ resource "cloudflare_record" "monitor" {
   value   = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
   type    = "A"
   ttl     = 1
-}
+} */
