@@ -236,7 +236,7 @@ resource "helm_release" "loki-stack" {
     value = "true"
   }
   set {
-    name  = "grafana.ingress.hosts[0].name"
+    name  = "grafana.ingress.hosts[0]"
     value = cloudflare_record.monitor.hostname
   }
   set_sensitive {
