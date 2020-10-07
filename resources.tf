@@ -166,3 +166,92 @@ resource "helm_release" "argo-cd" {
     value = "false"
   }
 }
+
+
+## Monitoring
+
+resource "kubernetes_namespace" "monitoring" {
+  metadata {
+    name = "monitoring"
+  }
+}
+
+resource "helm_release" "loki-stack" {
+  name       = "loki-stack"
+  namespace  = "monitoring"
+  repository = "https://grafana.github.io/loki/charts"
+  chart      = "loki-stack"
+  values = [<<-EOT
+    grafana:
+      plugins:
+        - grafana-piechart-panel
+      dashboardProviders:
+        dashboardproviders.yaml:
+          apiVersion: 1
+          providers:
+            - name: default
+              orgId: 1
+              folder:
+              type: file
+              disableDeletion: true
+              editable: false
+              options:
+                path: /var/lib/grafana/dashboards/default
+      dashboards:
+        default:
+          loki-dashboard:
+            gnetId: 12611
+            revision: 1
+            datasource: Loki
+          prometheus-stats:
+            gnetId: 10000
+            revision: 1
+            datasource: Prometheus
+  EOT
+  ]
+  set {
+    name  = "grafana.enabled"
+    value = "true"
+  }
+  set {
+    name  = "prometheus.enabled"
+    value = "true"
+  }
+  set {
+    name  = "prometheus.alertmanager.persistentVolume.enabled"
+    value = "false"
+  }
+  set {
+    name  = "prometheus.server.persistentVolume.enabled"
+    value = "false"
+  }
+  set {
+    name  = "grafana.ingress.enabled"
+    value = "true"
+  }
+  set {
+    name  = "grafana.plugins[0]"
+    value = "grafana-piechart-panel"
+  }
+  set {
+    name  = "dashboardsProvider.enabled"
+    value = "true"
+  }
+  set {
+    name  = "grafana.ingress.hosts[0]"
+    value = cloudflare_record.monitor.hostname
+  }
+  set_sensitive {
+    name  = "grafana.adminPassword"
+    value = var.grafana_password
+  }
+}
+
+resource "cloudflare_record" "monitor" {
+  zone_id = var.cloudflare_zone_id
+  name    = "monitor"
+  proxied = true
+  value   = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
+  type    = "A"
+  ttl     = 1
+}
