@@ -176,13 +176,43 @@ resource "kubernetes_namespace" "monitoring" {
   }
 }
 
-resource "helm_release" "kube-prom-stack" {
-  name       = "kube-prom-stack"
+resource "helm_release" "loki-stack" {
+  name       = "loki-stack"
   namespace  = "monitoring"
-  repository = "https://prometheus-community.github.io/helm-charts"
-  chart      = "kube-prometheus-stack"
+  repository = "https://grafana.github.io/loki/charts"
+  chart      = "loki-stack"
+  values = [<<-EOT
+    grafana:
+      plugins:
+        - grafana-piechart-panel
+      dashboardProviders:
+        dashboardproviders.yaml:
+          apiVersion: 1
+          providers:
+            - name: default
+              orgId: 1
+              folder:
+              type: file
+              disableDeletion: true
+              editable: false
+              options:
+                path: /var/lib/grafana/dashboards/default
+      dashboards:
+        default:
+          loki-dashboard:
+            gnetId: 12611
+            revision: 1
+          prometheus-stats:
+            gnetId: 10000
+            revision: 1
+  EOT
+  ]
   set {
     name  = "grafana.enabled"
+    value = "true"
+  }
+  set {
+    name  = "prometheus.enabled"
     value = "true"
   }
   set {
@@ -198,20 +228,21 @@ resource "helm_release" "kube-prom-stack" {
     value = "true"
   }
   set {
-    name  = "grafana.ingress.hosts[0]"
+    name  = "grafana.plugins[0]"
+    value = "grafana-piechart-panel"
+  }
+  set {
+    name  = "dashboardsProvider.enabled"
+    value = "true"
+  }
+  set {
+    name  = "grafana.ingress.hosts[0].name"
     value = cloudflare_record.monitor.hostname
   }
   set_sensitive {
     name  = "grafana.adminPassword"
     value = var.grafana_password
   }
-}
-
-resource "helm_release" "loki-stack" {
-  name       = "loki-stack"
-  namespace  = "monitoring"
-  repository = "https://grafana.github.io/loki/charts"
-  chart      = "loki-stack"
 }
 
 resource "cloudflare_record" "monitor" {
