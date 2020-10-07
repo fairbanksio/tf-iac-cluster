@@ -202,9 +202,11 @@ resource "helm_release" "loki-stack" {
           loki-dashboard:
             gnetId: 12611
             revision: 1
+            datasource: Loki
           prometheus-stats:
             gnetId: 10000
             revision: 1
+            datasource: Prometheus
   EOT
   ]
   set {
