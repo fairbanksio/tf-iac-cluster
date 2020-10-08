@@ -29,7 +29,7 @@ resource "helm_release" "metrics-server" {
     value = "true"
   }
   set {
-    name = "args[0]"
+    name  = "args[0]"
     value = "--kubelet-preferred-address-types=InternalIP"
   }
 }
