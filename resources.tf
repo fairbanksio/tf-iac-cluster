@@ -28,6 +28,10 @@ resource "helm_release" "metrics-server" {
     name  = "hostNetwork.enabled"
     value = "true"
   }
+  set {
+    name = "args[0]"
+    value = "--kubelet-preferred-address-types=InternalIP"
+  }
 }
 
 ## Datadog 
