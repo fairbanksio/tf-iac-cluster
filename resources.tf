@@ -268,3 +268,39 @@ resource "helm_release" "node-problem-detector" {
   name       = "node-problem-detector"
   namespace  = "kube-system"
 }
+
+## Prometheus
+
+resource "kubernetes_namespace" "monitoring" {
+  metadata {
+    name = "monitoring"
+  }
+}
+
+resource "helm_release" "kube-prometheus-stack" {
+  repository = "https://prometheus-community.github.io/helm-charts"
+  chart      = "kube-prometheus-stack"
+  name       = "kube-prometheus-stack"
+  namespace  = "monitoring"
+  set {
+    name  = "grafana.ingress.enabled"
+    value = "true"
+  }
+  set {
+    name  = "grafana.ingress.hosts[0]"
+    value = cloudflare_record.monitor.hostname
+  }
+  set_sensitive {
+    name  = "grafana.adminPassword"
+    value = var.grafana_password
+  }
+}
+
+resource "cloudflare_record" "monitor" {
+  zone_id = var.cloudflare_zone_id
+  name    = "monitor"
+  proxied = true
+  value   = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
+  type    = "A"
+  ttl     = 1
+} 
