@@ -222,3 +222,12 @@ resource "cloudflare_record" "monitor" {
   type    = "A"
   ttl     = 1
 }
+
+## Node Problem Detector
+
+resource "helm_release" "node-problem-detector" {
+  repository = "https://kubernetes-charts.storage.googleapis.com"
+  chart      = "node-problem-detector"
+  name       = "node-problem-detector"
+  namespace  = "kube-system"
+}
