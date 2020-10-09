@@ -28,6 +28,10 @@ resource "helm_release" "metrics-server" {
     name  = "hostNetwork.enabled"
     value = "true"
   }
+  set {
+    name  = "args[0]"
+    value = "--kubelet-preferred-address-types=InternalIP"
+  }
 }
 
 ## Datadog 
@@ -168,7 +172,7 @@ resource "helm_release" "argo-cd" {
 }
 
 
-## Monitoring
+/* ## Monitoring
 
 resource "kubernetes_namespace" "monitoring" {
   metadata {
@@ -176,13 +180,45 @@ resource "kubernetes_namespace" "monitoring" {
   }
 }
 
-resource "helm_release" "kube-prom-stack" {
-  name       = "kube-prom-stack"
+resource "helm_release" "loki-stack" {
+  name       = "loki-stack"
   namespace  = "monitoring"
-  repository = "https://prometheus-community.github.io/helm-charts"
-  chart      = "kube-prometheus-stack"
+  repository = "https://grafana.github.io/loki/charts"
+  chart      = "loki-stack"
+  values = [<<-EOT
+    grafana:
+      plugins:
+        - grafana-piechart-panel
+      dashboardProviders:
+        dashboardproviders.yaml:
+          apiVersion: 1
+          providers:
+            - name: default
+              orgId: 1
+              folder:
+              type: file
+              disableDeletion: true
+              editable: false
+              options:
+                path: /var/lib/grafana/dashboards/default
+      dashboards:
+        default:
+          loki-dashboard:
+            gnetId: 12611
+            revision: 1
+            datasource: Loki
+          prometheus-stats:
+            gnetId: 10000
+            revision: 1
+            datasource: Prometheus
+  EOT
+  ]
   set {
     name  = "grafana.enabled"
+    value = "true"
+  }
+  set {
+    name  = "prometheus.enabled"
     value = "true"
   }
   set {
@@ -198,6 +234,14 @@ resource "helm_release" "kube-prom-stack" {
     value = "true"
   }
   set {
+    name  = "grafana.plugins[0]"
+    value = "grafana-piechart-panel"
+  }
+  set {
+    name  = "dashboardsProvider.enabled"
+    value = "true"
+  }
+  set {
     name  = "grafana.ingress.hosts[0]"
     value = cloudflare_record.monitor.hostname
   }
@@ -207,13 +251,6 @@ resource "helm_release" "kube-prom-stack" {
   }
 }
 
-resource "helm_release" "loki-stack" {
-  name       = "loki-stack"
-  namespace  = "monitoring"
-  repository = "https://grafana.github.io/loki/charts"
-  chart      = "loki-stack"
-}
-
 resource "cloudflare_record" "monitor" {
   zone_id = var.cloudflare_zone_id
   name    = "monitor"
@@ -221,7 +258,7 @@ resource "cloudflare_record" "monitor" {
   value   = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
   type    = "A"
   ttl     = 1
-}
+} */
 
 ## Node Problem Detector
 
