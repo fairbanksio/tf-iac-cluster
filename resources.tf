@@ -92,7 +92,7 @@ resource "helm_release" "datadog" {
 ## Nginx 
 
 resource "helm_release" "ingress" {
-  repository = "https://helm.nginx.com/stable"
+  repository = "https://kubernetes-charts.storage.googleapis.com"
   chart      = "nginx-ingress"
   name       = "ingress"
   set {
@@ -101,36 +101,29 @@ resource "helm_release" "ingress" {
   }
 
   set {
-    name  = "controller.service.externalTrafficPolicy"
-    value = "Cluster"
-    type  = "string"
+    name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/do-loadbalancer-enable-proxy-protocol"
+    value = "true"
   }
-
   set {
-    name  = "controller.config.entries.proxy-protocol"
+    name  = "controller.config.use-proxy-protocol"
     value = "true"
     type  = "string"
   }
   set {
-    name  = "controller.config.entries.real-ip-header"
-    value = "proxy_protocol"
-    type  = "string"
-  }
-  set {
-    name  = "controller.config.entries.proxy-body-size"
+    name  = "controller.config.proxy-body-size"
     value = "250m"
   }
   set {
-    name  = "controller.config.entries.client-max-body-size"
+    name  = "controller.config.client-max-body-size"
     value = "250m"
   }
   set {
-    name  = "controller.config.entries.proxy-connect-timeout"
+    name  = "controller.config.proxy-connect-timeout"
     value = "60"
     type  = "string"
   }
   set {
-    name  = "controller.config.entries.proxy-read-timeout"
+    name  = "controller.config.proxy-read-timeout"
     value = "60"
     type  = "string"
   }
