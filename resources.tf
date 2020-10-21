@@ -90,7 +90,7 @@ resource "helm_release" "datadog" {
 }
 
 ## Nginx 
- 
+
 resource "helm_release" "ingress" {
   repository = "https://helm.nginx.com/stable"
   chart      = "nginx-ingress"
@@ -100,7 +100,7 @@ resource "helm_release" "ingress" {
     value = "nginx-ingress-controller"
   }
 
- /*  set {
+  /*  set {
     name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/do-loadbalancer-enable-proxy-protocol"
     value = "true"
   } */
