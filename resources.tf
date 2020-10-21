@@ -105,7 +105,7 @@ resource "helm_release" "ingress" {
     value = "Cluster"
     type  = "string"
   }
-  
+
   set {
     name  = "controller.config.entries.proxy-protocol"
     value = "true"
