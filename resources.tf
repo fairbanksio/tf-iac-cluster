@@ -105,6 +105,11 @@ resource "helm_release" "ingress" {
     value = "true"
   }
   set {
+    name  = "tcp.25"
+    value = "rcvr/rcvr-smtp:25"
+    type  = "string"
+  }
+  set {
     name  = "controller.config.use-proxy-protocol"
     value = "true"
     type  = "string"
