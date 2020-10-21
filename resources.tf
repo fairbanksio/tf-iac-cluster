@@ -100,30 +100,37 @@ resource "helm_release" "ingress" {
     value = "nginx-ingress-controller"
   }
 
-  /*  set {
-    name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/do-loadbalancer-enable-proxy-protocol"
-    value = "true"
-  } */
   set {
-    name  = "controller.config.use-proxy-protocol"
+    name  = "controller.service.externalTrafficPolicy"
+    value = "Cluster"
+    type  = "string"
+  }
+
+  set {
+    name  = "controller.config.entries.proxy-protocol"
     value = "true"
     type  = "string"
   }
   set {
-    name  = "controller.config.proxy-body-size"
+    name  = "controller.config.entries.real-ip-header"
+    value = "proxy_protocol"
+    type  = "string"
+  }
+  set {
+    name  = "controller.config.entries.proxy-body-size"
     value = "250m"
   }
   set {
-    name  = "controller.config.client-max-body-size"
+    name  = "controller.config.entries.client-max-body-size"
     value = "250m"
   }
   set {
-    name  = "controller.config.proxy-connect-timeout"
+    name  = "controller.config.entries.proxy-connect-timeout"
     value = "60"
     type  = "string"
   }
   set {
-    name  = "controller.config.proxy-read-timeout"
+    name  = "controller.config.entries.proxy-read-timeout"
     value = "60"
     type  = "string"
   }
