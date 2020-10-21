@@ -92,7 +92,7 @@ resource "helm_release" "datadog" {
 ## Nginx 
 
 resource "helm_release" "ingress" {
-  repository = "https://kubernetes-charts.storage.googleapis.com"
+  repository = "https://helm.nginx.com/stable"
   chart      = "nginx-ingress"
   name       = "ingress"
   set {

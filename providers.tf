@@ -1,16 +1,8 @@
-###
-# DigitalOcean
-###
-
 provider "digitalocean" {
   token             = var.do_token
   spaces_access_id  = var.do_access_id
   spaces_secret_key = var.do_secret_key
 }
-
-###
-# Helm
-###
 
 provider "helm" {
   kubernetes {
@@ -21,10 +13,6 @@ provider "helm" {
   }
 }
 
-###
-# Kube
-###
-
 provider "kubernetes" {
   load_config_file       = false
   host                   = digitalocean_kubernetes_cluster.k8s.endpoint
@@ -32,9 +20,6 @@ provider "kubernetes" {
   cluster_ca_certificate = base64decode(digitalocean_kubernetes_cluster.k8s.kube_config.0.cluster_ca_certificate)
 
 }
-###
-# Cloudflare
-###
 
 provider "cloudflare" {
   email   = var.cloudflare_email
