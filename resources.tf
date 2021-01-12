@@ -158,7 +158,7 @@ resource "helm_release" "pretty-default-backend" {
 }
 
 ## Argo CD
-/* ## Monitoring
+/*
 resource "kubernetes_namespace" "argo-cd" {
   metadata {
     name = "argo-cd"
@@ -177,7 +177,7 @@ resource "helm_release" "argo-cd" {
 }
 
 
-/* ## Monitoring
+## Monitoring
 
 resource "kubernetes_namespace" "monitoring" {
   metadata {
