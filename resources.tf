@@ -3,12 +3,12 @@ resource "digitalocean_kubernetes_cluster" "k8s" {
   name         = var.do_cluster_name
   region       = "sfo2"
   auto_upgrade = false
-  version      = "1.18.8-do.1"
+  version      = "1.18.10-do.3"
 
   node_pool {
     name       = "worker-pool"
-    size       = "s-4vcpu-8gb"
-    node_count = 2
+    size       = "s-2vcpu-2gb"
+    node_count = 3
   }
 }
 
