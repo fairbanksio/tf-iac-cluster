@@ -22,7 +22,7 @@ resource "digitalocean_kubernetes_cluster" "k8s" {
 
 resource "helm_release" "metrics-server" {
   name       = "metrics-server"
-  repository = "https://kubernetes-charts.storage.googleapis.com"
+  repository = "https://charts.helm.sh/stable"
   chart      = "metrics-server"
   set {
     name  = "hostNetwork.enabled"
@@ -43,7 +43,7 @@ resource "kubernetes_namespace" "datadog" {
 }
 
 resource "helm_release" "datadog" {
-  repository = "https://kubernetes-charts.storage.googleapis.com"
+  repository = "https://charts.helm.sh/stable"
   chart      = "datadog"
   name       = "datadog"
   namespace  = "datadog"
@@ -92,7 +92,7 @@ resource "helm_release" "datadog" {
 ## Nginx 
 
 resource "helm_release" "ingress" {
-  repository = "https://kubernetes-charts.storage.googleapis.com"
+  repository = "https://charts.helm.sh/stable"
   chart      = "nginx-ingress"
   name       = "ingress"
   set {
@@ -268,7 +268,7 @@ resource "cloudflare_record" "monitor" {
 ## Node Problem Detector
 
 resource "helm_release" "node-problem-detector" {
-  repository = "https://kubernetes-charts.storage.googleapis.com"
+  repository = "https://charts.helm.sh/stable"
   chart      = "node-problem-detector"
   name       = "node-problem-detector"
   namespace  = "kube-system"
