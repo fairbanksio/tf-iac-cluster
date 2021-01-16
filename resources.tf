@@ -191,18 +191,6 @@ resource "helm_release" "pretty-default-backend" {
     value = true
   }
   set {
-    name  = "autoscaling.minReplicas"
-    value = "2"
-  }
-  set {
-    name  = "resources.requests.cpu"
-    value = "50m"
-  }
-  set {
-    name  = "resources.requests.memory"
-    value = "64Mi"
-  }
-  set {
     name  = "bgColor"
     value = "#334455"
   }
