@@ -108,6 +108,18 @@ resource "helm_release" "ingress" {
     value = "2"
   }
   set {
+    name  = "controller.autoscaling.targetMemoryUtilizationPercentage"
+    value = "80"
+  }
+  set {
+    name  = "controller.autoscaling.targetCPUUtilizationPercentage"
+    value = "50"
+  }
+  set {
+    name  = "controller.autoscaling.minReplicas"
+    value = "2"
+  }
+  set {
     name  = "controller.resources.requests.cpu"
     value = "50m"
   }
