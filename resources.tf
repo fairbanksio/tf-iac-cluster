@@ -160,6 +160,20 @@ resource "helm_release" "pretty-default-backend" {
   }
 }
 
+resource "kubernetes_pod_disruption_budget" "ingress-pdb" {
+  metadata {
+    name      = "ingress-pdb"
+  }
+  spec {
+    max_unavailable = "50%"
+    selector {
+      match_labels = {
+        app = "nginx-ingress"
+      }
+    }
+  }
+}
+
 ## Argo CD
 /*
 resource "kubernetes_namespace" "argo-cd" {
@@ -278,17 +292,3 @@ resource "helm_release" "node-problem-detector" {
 }
 
 
-resource "kubernetes_pod_disruption_budget" "ingress-pdb" {
-  metadata {
-    name      = "ingress-pdb"
-    namespace = "bsord-tiles"
-  }
-  spec {
-    max_unavailable = "50%"
-    selector {
-      match_labels = {
-        app = "nginx-ingress"
-      }
-    }
-  }
-}
