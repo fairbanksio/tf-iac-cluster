@@ -99,7 +99,10 @@ resource "helm_release" "ingress" {
     name  = "controller.service.name"
     value = "nginx-ingress-controller"
   }
-
+  set {
+    name  = "controller.autoscaling.minReplicas"
+    value = "2"
+  }
   set {
     name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/do-loadbalancer-enable-proxy-protocol"
     value = "true"
@@ -272,4 +275,20 @@ resource "helm_release" "node-problem-detector" {
   chart      = "node-problem-detector"
   name       = "node-problem-detector"
   namespace  = "kube-system"
+}
+
+
+resource "kubernetes_pod_disruption_budget" "ingress-pdb" {
+  metadata {
+    name      = "ingress-pdb"
+    namespace = "bsord-tiles"
+  }
+  spec {
+    max_unavailable = "50%"
+    selector {
+      match_labels = {
+        app = "nginx-ingress"
+      }
+    }
+  }
 }
