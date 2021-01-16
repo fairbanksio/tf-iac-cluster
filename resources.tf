@@ -183,7 +183,7 @@ resource "helm_release" "ingress" {
 
 resource "helm_release" "pretty-default-backend" {
   name       = "pretty-default-backend"
-  repository = "https://h.cfcr.io/fairbanks.io/default"
+  repository = "https://h.cfcr.io/bsord/charts"
   chart      = "pretty-default-backend"
   version    = "0.2.0"
   namespace  = "default"
