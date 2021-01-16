@@ -167,7 +167,7 @@ resource "helm_release" "pretty-default-backend" {
     value = "2"
   }
   set {
-    name  = "resources.requests.cpu"
+    name  = "controller.resources.requests.cpu"
     value = "100m"
   }
   set {
