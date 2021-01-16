@@ -155,6 +155,10 @@ resource "helm_release" "pretty-default-backend" {
   chart      = "pretty-default-backend"
   namespace  = "default"
   set {
+    name  = "replicaCount"
+    value = 2
+  }
+  set {
     name  = "bgColor"
     value = "#334455"
   }
