@@ -155,8 +155,12 @@ resource "helm_release" "pretty-default-backend" {
   chart      = "pretty-default-backend"
   namespace  = "default"
   set {
-    name  = "replicaCount"
-    value = 2
+    name  = "controller.autoscaling.enabled"
+    value = true
+  }
+  set {
+    name  = "controller.autoscaling.minReplicas"
+    value = "2"
   }
   set {
     name  = "bgColor"
