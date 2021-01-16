@@ -32,6 +32,18 @@ resource "helm_release" "metrics-server" {
     name  = "args[0]"
     value = "--kubelet-preferred-address-types=InternalIP"
   }
+  set {
+    name  = "replicas"
+    value = "2"
+  }
+  set {
+    name  = "podDisruptionBudget.enabled"
+    value = true
+  }
+  set {
+    name  = "podDisruptionBudget.minAvailable"
+    value = "1"
+  }
 }
 
 ## Datadog 
