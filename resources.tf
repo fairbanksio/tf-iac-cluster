@@ -100,6 +100,10 @@ resource "helm_release" "ingress" {
     value = "nginx-ingress-controller"
   }
   set {
+    name  = "controller.autoscaling.enabled"
+    value = true
+  }
+  set {
     name  = "controller.autoscaling.minReplicas"
     value = "2"
   }
