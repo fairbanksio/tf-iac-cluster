@@ -175,19 +175,19 @@ resource "helm_release" "pretty-default-backend" {
   chart      = "pretty-default-backend"
   namespace  = "default"
   set {
-    name  = "controller.autoscaling.enabled"
+    name  = "autoscaling.enabled"
     value = true
   }
   set {
-    name  = "controller.autoscaling.minReplicas"
+    name  = "autoscaling.minReplicas"
     value = "2"
   }
   set {
-    name  = "controller.resources.requests.cpu"
+    name  = "resources.requests.cpu"
     value = "50m"
   }
   set {
-    name  = "controller.resources.requests.memory"
+    name  = "resources.requests.memory"
     value = "64Mi"
   }
   set {
