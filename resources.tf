@@ -185,6 +185,7 @@ resource "helm_release" "pretty-default-backend" {
   name       = "pretty-default-backend"
   repository = "https://h.cfcr.io/fairbanks.io/default"
   chart      = "pretty-default-backend"
+  version    = "0.2.0"
   namespace  = "default"
   set {
     name  = "autoscaling.enabled"
