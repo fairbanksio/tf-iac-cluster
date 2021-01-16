@@ -108,8 +108,12 @@ resource "helm_release" "ingress" {
     value = "2"
   }
   set {
-    name  = "resources.requests.cpu"
-    value = "100m"
+    name  = "controller.resources.requests.cpu"
+    value = "50m"
+  }
+  set {
+    name  = "controller.resources.requests.memory"
+    value = "64Mi"
   }
   set {
     name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/do-loadbalancer-enable-proxy-protocol"
@@ -168,7 +172,11 @@ resource "helm_release" "pretty-default-backend" {
   }
   set {
     name  = "controller.resources.requests.cpu"
-    value = "100m"
+    value = "50m"
+  }
+  set {
+    name  = "controller.resources.requests.memory"
+    value = "64Mi"
   }
   set {
     name  = "bgColor"
