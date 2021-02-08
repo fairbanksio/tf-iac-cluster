@@ -3,12 +3,14 @@ resource "digitalocean_kubernetes_cluster" "k8s" {
   name         = var.do_cluster_name
   region       = "sfo2"
   auto_upgrade = false
-  version      = "1.18.8-do.1"
+  version      = "1.18.10-do.3"
 
   node_pool {
     name       = "worker-pool"
-    size       = "s-4vcpu-8gb"
-    node_count = 2
+    size       = "s-2vcpu-2gb"
+    auto_scale = true
+    min_nodes  = 3
+    max_nodes  = 4
   }
 }
 
@@ -22,7 +24,7 @@ resource "digitalocean_kubernetes_cluster" "k8s" {
 
 resource "helm_release" "metrics-server" {
   name       = "metrics-server"
-  repository = "https://kubernetes-charts.storage.googleapis.com"
+  repository = "https://charts.helm.sh/stable"
   chart      = "metrics-server"
   set {
     name  = "hostNetwork.enabled"
@@ -31,6 +33,18 @@ resource "helm_release" "metrics-server" {
   set {
     name  = "args[0]"
     value = "--kubelet-preferred-address-types=InternalIP"
+  }
+  set {
+    name  = "replicas"
+    value = "2"
+  }
+  set {
+    name  = "podDisruptionBudget.enabled"
+    value = true
+  }
+  set {
+    name  = "podDisruptionBudget.minAvailable"
+    value = "1"
   }
 }
 
@@ -43,7 +57,7 @@ resource "kubernetes_namespace" "datadog" {
 }
 
 resource "helm_release" "datadog" {
-  repository = "https://kubernetes-charts.storage.googleapis.com"
+  repository = "https://charts.helm.sh/stable"
   chart      = "datadog"
   name       = "datadog"
   namespace  = "datadog"
@@ -92,17 +106,49 @@ resource "helm_release" "datadog" {
 ## Nginx 
 
 resource "helm_release" "ingress" {
-  repository = "https://kubernetes-charts.storage.googleapis.com"
+  repository = "https://charts.helm.sh/stable"
   chart      = "nginx-ingress"
   name       = "ingress"
   set {
     name  = "controller.service.name"
     value = "nginx-ingress-controller"
   }
-
+  set {
+    name  = "controller.autoscaling.enabled"
+    value = true
+  }
+  set {
+    name  = "controller.autoscaling.minReplicas"
+    value = "2"
+  }
+  set {
+    name  = "controller.autoscaling.targetMemoryUtilizationPercentage"
+    value = "80"
+  }
+  set {
+    name  = "controller.autoscaling.targetCPUUtilizationPercentage"
+    value = "50"
+  }
+  set {
+    name  = "controller.autoscaling.minReplicas"
+    value = "2"
+  }
+  set {
+    name  = "controller.resources.requests.cpu"
+    value = "50m"
+  }
+  set {
+    name  = "controller.resources.requests.memory"
+    value = "150Mi"
+  }
   set {
     name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/do-loadbalancer-enable-proxy-protocol"
     value = "true"
+  }
+  set {
+    name  = "tcp.25"
+    value = "rcvr/rcvr-smtp:25"
+    type  = "string"
   }
   set {
     name  = "controller.config.use-proxy-protocol"
@@ -139,9 +185,13 @@ resource "helm_release" "ingress" {
 
 resource "helm_release" "pretty-default-backend" {
   name       = "pretty-default-backend"
-  repository = "https://h.cfcr.io/fairbanks.io/default"
+  repository = "https://h.cfcr.io/bsord/charts"
   chart      = "pretty-default-backend"
   namespace  = "default"
+  set {
+    name  = "autoscaling.enabled"
+    value = true
+  }
   set {
     name  = "bgColor"
     value = "#334455"
@@ -152,8 +202,9 @@ resource "helm_release" "pretty-default-backend" {
   }
 }
 
-## Argo CD
 
+## Argo CD
+/*
 resource "kubernetes_namespace" "argo-cd" {
   metadata {
     name = "argo-cd"
@@ -172,7 +223,7 @@ resource "helm_release" "argo-cd" {
 }
 
 
-/* ## Monitoring
+## Monitoring
 
 resource "kubernetes_namespace" "monitoring" {
   metadata {
@@ -263,8 +314,10 @@ resource "cloudflare_record" "monitor" {
 ## Node Problem Detector
 
 resource "helm_release" "node-problem-detector" {
-  repository = "https://kubernetes-charts.storage.googleapis.com"
+  repository = "https://charts.helm.sh/stable"
   chart      = "node-problem-detector"
   name       = "node-problem-detector"
   namespace  = "kube-system"
 }
+
+
