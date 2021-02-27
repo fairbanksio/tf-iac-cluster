@@ -122,10 +122,6 @@ resource "helm_release" "ingress" {
     value = "2"
   }
   set {
-    name  = "controller.autoscaling.targetMemoryUtilizationPercentage"
-    value = "80"
-  }
-  set {
     name  = "controller.autoscaling.targetCPUUtilizationPercentage"
     value = "50"
   }
@@ -136,10 +132,6 @@ resource "helm_release" "ingress" {
   set {
     name  = "controller.resources.requests.cpu"
     value = "50m"
-  }
-  set {
-    name  = "controller.resources.requests.memory"
-    value = "150Mi"
   }
   set {
     name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/do-loadbalancer-enable-proxy-protocol"
