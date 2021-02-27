@@ -180,9 +180,14 @@ resource "helm_release" "pretty-default-backend" {
   repository = "https://h.cfcr.io/bsord/charts"
   chart      = "pretty-default-backend"
   namespace  = "default"
+  version = "0.4.0"
   set {
     name  = "autoscaling.enabled"
     value = true
+  }
+  set {
+    name  = "autoscaling.minReplicas"
+    value = 2
   }
   set {
     name  = "bgColor"
