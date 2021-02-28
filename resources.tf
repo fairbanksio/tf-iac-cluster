@@ -328,7 +328,7 @@ resource "kubernetes_namespace" "flux" {
 
 resource "kubernetes_secret" "flux-ssh" {
   metadata {
-    name = "flux-ssh"
+    name      = "flux-ssh"
     namespace = "flux"
   }
 
