@@ -347,14 +347,6 @@ resource "helm_release" "fluxcd" {
     value = "ssh://git@github.com/Fairbanks-io/flux2-kustomize-helm-example"
   }
   set {
-    name  = "git.secretName"
-    value = "flux-ssh"
-  }
-  set {
-    name  = "git.secretDataKey"
-    value = "deploy-key"
-  }
-  set {
     name  = "git.path"
     value = "clusters/production"
   }
