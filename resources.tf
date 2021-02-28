@@ -354,6 +354,10 @@ resource "helm_release" "fluxcd" {
     name  = "git.secretDataKey"
     value = "deploy-key"
   }
+  set {
+    name  = "git.path"
+    value = "clusters/production"
+  }
 }
 
 
