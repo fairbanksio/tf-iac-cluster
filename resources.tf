@@ -318,3 +318,41 @@ resource "helm_release" "node-problem-detector" {
 }
 
 
+## FluxCD
+
+resource "kubernetes_namespace" "flux" {
+  metadata {
+    name = "flux"
+  }
+}
+
+resource "kubernetes_secret" "flux-ssh" {
+  metadata {
+    name = "flux-ssh"
+  }
+
+  data = {
+    deploy-key = "${var.flux_deploy_key}"
+  }
+}
+
+resource "helm_release" "fluxcd" {
+  repository = "https://charts.fluxcd.io"
+  chart      = "flux"
+  name       = "fluxcd"
+  namespace  = "flux"
+  set {
+    name  = "git.url"
+    value = "git@github.com:https://github.com/Fairbanks-io/flux2-kustomize-helm-example"
+  }
+  set {
+    name  = "git.secretName"
+    value = "flux-ssh"
+  }
+  set {
+    name  = "git.secretDataKey"
+    value = "deploy-key"
+  }
+}
+
+

@@ -9,3 +9,4 @@ variable "cloudflare_api_key" {}
 variable "cloudflare_zone_id" {}
 variable "cloudflare_zone_id_fairbanks" {}
 variable "grafana_password" {}
+variable "flux_deploy_key" {}
