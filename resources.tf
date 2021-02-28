@@ -351,6 +351,10 @@ resource "helm_release" "fluxcd" {
     value = "clusters/production"
   }
   set {
+    name  = "git.branch"
+    value = "main"
+  }
+  set {
     name  = "registry.disableScanning"
     value = true
   }
