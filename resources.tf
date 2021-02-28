@@ -326,16 +326,17 @@ resource "kubernetes_namespace" "flux" {
   }
 }
 
-resource "kubernetes_secret" "flux-ssh" {
-  metadata {
-    name      = "flux-ssh"
-    namespace = "flux"
-  }
+##
+##resource "kubernetes_secret" "flux-ssh" {
+## metadata {
+##    name      = "flux-ssh"
+##    namespace = "flux"
+##  }
 
-  data = {
-    deploy-key = "${var.flux_deploy_key}"
-  }
-}
+##  data = {
+##    deploy-key = "${var.flux_deploy_key}"
+##  }
+##}
 
 resource "helm_release" "fluxcd" {
   repository = "https://charts.fluxcd.io"
