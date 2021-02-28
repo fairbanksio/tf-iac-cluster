@@ -344,7 +344,7 @@ resource "helm_release" "fluxcd" {
   namespace  = "flux"
   set {
     name  = "git.url"
-    value = "git@github.com:Fairbanks-io/flux2-kustomize-helm-example"
+    value = "ssh://git@github.com/Fairbanks-io/flux2-kustomize-helm-example"
   }
   set {
     name  = "git.secretName"
