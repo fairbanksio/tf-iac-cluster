@@ -122,6 +122,14 @@ resource "helm_release" "ingress" {
     value = "2"
   }
   set {
+    name  = "controller.autoscaling.minReplicas"
+    value = 3
+  }
+  set {
+    name  = "controller.limits.cpu"
+    value = "200m"
+  }
+  set {
     name  = "controller.autoscaling.targetCPUUtilizationPercentage"
     value = "50"
   }
@@ -316,48 +324,4 @@ resource "helm_release" "node-problem-detector" {
   name       = "node-problem-detector"
   namespace  = "kube-system"
 }
-
-
-## FluxCD
-
-resource "kubernetes_namespace" "flux" {
-  metadata {
-    name = "flux"
-  }
-}
-
-resource "kubernetes_secret" "flux-ssh" {
-  metadata {
-    name      = "flux-ssh"
-    namespace = "flux"
-  }
-
-  data = {
-    deploy-key = "${var.flux_deploy_key}"
-  }
-}
-
-resource "helm_release" "fluxcd" {
-  repository = "https://charts.fluxcd.io"
-  chart      = "flux"
-  name       = "fluxcd"
-  namespace  = "flux"
-  set {
-    name  = "git.url"
-    value = "ssh://git@github.com/Fairbanks-io/flux2-kustomize-helm-example"
-  }
-  set {
-    name  = "git.path"
-    value = "clusters/production"
-  }
-  set {
-    name  = "git.branch"
-    value = "main"
-  }
-  set {
-    name  = "registry.disableScanning"
-    value = true
-  }
-}
-
 
