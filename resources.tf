@@ -122,7 +122,7 @@ resource "helm_release" "ingress" {
     value = "2"
   }
   set {
-    name  = "controller.autoscaling.minReplicas"
+    name  = "controller.autoscaling.maxReplicas"
     value = 3
   }
   set {
