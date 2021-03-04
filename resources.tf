@@ -142,6 +142,10 @@ resource "helm_release" "ingress" {
     value = "50m"
   }
   set {
+    name  = "controller.resources.requests.memory"
+    value = "200Mi"
+  }
+  set {
     name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/do-loadbalancer-enable-proxy-protocol"
     value = "true"
   }
