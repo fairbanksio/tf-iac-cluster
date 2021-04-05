@@ -329,3 +329,44 @@ resource "helm_release" "node-problem-detector" {
   namespace  = "kube-system"
 }
 
+## FluxCD
+resource "kubernetes_namespace" "flux" {
+  metadata {
+    name = "flux-system"
+  }
+}
+resource "kubernetes_secret" "flux-ssh" {
+  metadata {
+    name      = "flux-ssh"
+    namespace = "flux-system"
+  }
+  data = {
+    identity = "${var.flux_deploy_key}"
+  }
+}
+resource "helm_release" "fluxcd" {
+  repository = "https://charts.fluxcd.io"
+  chart      = "flux"
+  name       = "fluxcd"
+  namespace  = "flux-system"
+  set {
+    name  = "git.url"
+    value = "git@github.com:Fairbanks-io/flux-fleet.git"
+  }
+  set {
+    name  = "git.secretName"
+    value = "flux-ssh"
+  }
+  set {
+    name  = "git.path"
+    value = "apps"
+  }
+  set {
+    name  = "git.branch"
+    value = "main"
+  }
+  set {
+    name  = "registry.disableScanning"
+    value = true
+  }
+}
