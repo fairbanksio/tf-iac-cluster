@@ -10,3 +10,5 @@ variable "cloudflare_zone_id" {}
 variable "cloudflare_zone_id_fairbanks" {}
 variable "grafana_password" {}
 variable "flux_deploy_key" {}
+variable "sealed_sec_pub" {}
+variable "sealed_sec" {}
