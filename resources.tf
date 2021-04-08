@@ -344,6 +344,20 @@ resource "kubernetes_secret" "flux-ssh" {
     identity = "${var.flux_deploy_key}"
   }
 }
+resource "kubernetes_secret" "sealed-secret-custom-key" {
+  metadata {
+    name      = "customkey"
+    namespace = "flux-system"
+    labels = {
+      "sealedsecrets.bitnami.com/sealed-secrets-key" = "active"
+    }
+  }
+  data = {
+    "tls.crt" = "${var.sealed_sec_pub}"
+    "tls.key" = "${var.sealed_sec}"
+  }
+  type = "kubernetes.io/tls"
+}
 resource "helm_release" "fluxcd" {
   repository = "https://charts.fluxcd.io"
   chart      = "flux"
@@ -351,7 +365,7 @@ resource "helm_release" "fluxcd" {
   namespace  = "flux-system"
   set {
     name  = "git.url"
-    value = "git@github.com:Fairbanks-io/flux-fleet.git"
+    value = "git@github.com:Fairbanks-io/flux-gitops-apps.git"
   }
   set {
     name  = "git.secretName"
@@ -359,7 +373,7 @@ resource "helm_release" "fluxcd" {
   }
   set {
     name  = "git.path"
-    value = "apps"
+    value = "cluster"
   }
   set {
     name  = "git.branch"
@@ -369,4 +383,4 @@ resource "helm_release" "fluxcd" {
     name  = "registry.disableScanning"
     value = true
   }
-}
+} 
