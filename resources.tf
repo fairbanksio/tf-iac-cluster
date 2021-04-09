@@ -150,6 +150,10 @@ resource "helm_release" "ingress" {
     value = "true"
   }
   set {
+    name  = "controller.publishService.enabled"
+    value = "true"
+  }
+  set {
     name  = "tcp.25"
     value = "rcvr/rcvr-smtp:25"
     type  = "string"
