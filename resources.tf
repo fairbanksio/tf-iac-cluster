@@ -355,8 +355,8 @@ resource "kubernetes_secret" "flux-system" {
     namespace = "flux-system"
   }
   data = {
-    identity = var.flux_deploy_key
-    known_hosts    = local.known_hosts
+    identity    = var.flux_deploy_key
+    known_hosts = local.known_hosts
   }
 }
 
@@ -385,7 +385,7 @@ resource "helm_release" "fluxcd" {
     name  = "registry.disableScanning"
     value = true
   }
-} 
+}
 
 
 resource "kubernetes_secret" "sealed-secret-custom-key" {
