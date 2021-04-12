@@ -391,7 +391,7 @@ resource "helm_release" "fluxcd" {
 resource "kubernetes_secret" "sealed-secret-custom-key" {
   metadata {
     name      = "customkey"
-    namespace = "flux-system"
+    namespace = "kube-system"
     labels = {
       "sealedsecrets.bitnami.com/sealed-secrets-key" = "active"
     }
