@@ -326,12 +326,12 @@ resource "cloudflare_record" "monitor" {
 
 ## Node Problem Detector
 
-resource "helm_release" "node-problem-detector" {
+/* resource "helm_release" "node-problem-detector" {
   repository = "https://charts.helm.sh/stable"
   chart      = "node-problem-detector"
   name       = "node-problem-detector"
   namespace  = "kube-system"
-}
+} */
 
 ## FluxCD
 # SSH
