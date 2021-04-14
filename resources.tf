@@ -22,7 +22,7 @@ resource "digitalocean_kubernetes_cluster" "k8s" {
 
 ## Metrics Server
 
-resource "helm_release" "metrics-server" {
+/* resource "helm_release" "metrics-server" {
   name       = "metrics-server"
   repository = "https://charts.helm.sh/stable"
   chart      = "metrics-server"
@@ -46,7 +46,7 @@ resource "helm_release" "metrics-server" {
     name  = "podDisruptionBudget.minAvailable"
     value = "1"
   }
-}
+} */
 
 ## Datadog 
 
