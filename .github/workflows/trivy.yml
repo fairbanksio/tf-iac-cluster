@@ -1,12 +1,12 @@
-name: build
+name: Vulnerability Scan
 on:
   push:
     branches:
       - master
   pull_request:
 jobs:
-  scan:
-    name: scan
+  trivy:
+    name: Trivy IAC scan
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout code
@@ -16,11 +16,6 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: 'config'
-          ignore-unfixed: true
-          format: 'template'
-          template: '@/contrib/sarif.tpl'
-          output: 'trivy-results.sarif'
-          severity: 'CRITICAL'
 
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v1
