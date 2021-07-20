@@ -15,12 +15,10 @@ jobs:
       - name: Run Trivy vulnerability scanner in repo mode
         uses: bsord/trivy-action@enable-config
         with:
-          scan-type: 'fs'
-          ignore-unfixed: true
-          format: 'template'
-          template: '@/contrib/sarif.tpl'
-          output: 'trivy-results.sarif'
-          severity: 'CRITICAL'
+          scan-type: 'config'
+          hide-progress: false
+          format: 'table'
+          severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
           
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v1
