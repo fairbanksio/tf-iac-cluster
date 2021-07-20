@@ -16,7 +16,7 @@ jobs:
         uses: bsord/trivy-action@master
         with:
           scan-type: 'config'
-          ignore-unfixed: true
+          ignore-unfixed: false
           format: 'template'
           template: '@/contrib/sarif.tpl'
           output: 'trivy-results.sarif'
