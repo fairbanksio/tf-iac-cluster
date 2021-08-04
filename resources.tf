@@ -94,10 +94,10 @@ resource "cloudflare_record" "status" {
   type    = "CNAME"
 }
 
-//resource "cloudflare_record" "status" {
-//  provider = "cloudflare-bsord"
-//  zone_id = var.cloudflare_zone_id_bsord_io
-//  name    = "status"
-//  value   = "uptime-kuma-zsfhc.ondigitalocean.app."
-//  type    = "CNAME"
-//}
+#resource "cloudflare_record" "status" {
+#  provider = "cloudflare-bsord"
+#  zone_id = var.cloudflare_zone_id_bsord_io
+#  name    = "status"
+#  value   = "uptime-kuma-zsfhc.ondigitalocean.app."
+#  type    = "CNAME"
+#}
