@@ -86,9 +86,18 @@ resource "kubernetes_secret" "sealed-secret-custom-key" {
   type = "kubernetes.io/tls"
 }
 
-resource "cloudflare_record" "status" {
-  zone_id = var.cloudflare_zone_id_fairbanks
-  name    = "status"
-  value   = "uptime-kuma-zsfhc.ondigitalocean.app."
-  type    = "CNAME"
+resource "cloudflare_record" "status-fairbanks-io" {
+  provider = cloudflare.cloudflare-fairbanks
+  zone_id  = var.cloudflare_zone_id_fairbanks_io
+  name     = "status"
+  value    = "uptime-kuma-zsfhc.ondigitalocean.app."
+  type     = "CNAME"
+}
+
+resource "cloudflare_record" "status-bsord-io" {
+  provider = cloudflare.cloudflare-bsord
+  zone_id  = var.cloudflare_zone_id_bsord_io
+  name     = "status"
+  value    = "uptime-kuma-zsfhc.ondigitalocean.app."
+  type     = "CNAME"
 }
