@@ -95,7 +95,7 @@ resource "cloudflare_record" "status-fairbanks-io" {
 }
 
 resource "cloudflare_record" "status-bsord-io" {
-  provider = cloudflare-bsord
+  provider = cloudflare.cloudflare-bsord
   zone_id = var.cloudflare_zone_id_bsord_io
   name    = "status"
   value   = "uptime-kuma-zsfhc.ondigitalocean.app."
