@@ -30,13 +30,13 @@ provider "kubernetes" {
 # Cloudflare
 
 provider "cloudflare" {
-  alias = "cloudflare-fairbanks"
+  alias   = "cloudflare-fairbanks"
   email   = var.cloudflare_email_fairbanks
   api_key = var.cloudflare_api_key_fairbanks
 }
 
 provider "cloudflare" {
-  alias = "cloudflare-bsord"
+  alias   = "cloudflare-bsord"
   email   = var.cloudflare_email_bsord
   api_key = var.cloudflare_api_key_bsord
 }
