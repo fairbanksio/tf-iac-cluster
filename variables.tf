@@ -9,9 +9,9 @@ variable "do_space_name" {}
 variable "dd_api_key" {}
 
 # Cloudflare - Bsord
-#variable "cloudflare_email_bsord" {}
-#variable "cloudflare_api_key_bsord" {}
-#variable "cloudflare_zone_id_bsord_io" {}
+variable "cloudflare_email_bsord" {}
+variable "cloudflare_api_key_bsord" {}
+variable "cloudflare_zone_id_bsord_io" {}
 
 # Cloudflare - Fairbanks
 variable "cloudflare_email_fairbanks" {}
