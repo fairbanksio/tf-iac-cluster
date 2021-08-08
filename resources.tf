@@ -1,4 +1,5 @@
 ## Digital Ocean
+
 resource "digitalocean_kubernetes_cluster" "k8s" {
   name          = var.do_cluster_name
   region        = "sfo2"
@@ -17,10 +18,10 @@ resource "digitalocean_kubernetes_cluster" "k8s" {
 
 
 ## FluxCD
-# SSH
 locals {
   known_hosts = "github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ=="
 }
+
 resource "kubernetes_namespace" "flux" {
   metadata {
     name = "flux-system"
@@ -32,6 +33,7 @@ resource "kubernetes_namespace" "flux" {
     ]
   }
 }
+
 resource "kubernetes_secret" "flux-system" {
   metadata {
     name      = "flux-system"
@@ -69,7 +71,6 @@ resource "helm_release" "fluxcd" {
     value = true
   }
 }
-
 
 resource "kubernetes_secret" "sealed-secret-custom-key" {
   metadata {
