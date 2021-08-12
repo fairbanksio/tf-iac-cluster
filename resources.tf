@@ -5,7 +5,7 @@ resource "digitalocean_kubernetes_cluster" "k8s" {
   region        = "sfo2"
   auto_upgrade  = true
   surge_upgrade = true
-  version       = "1.20.8-do.0"
+  version       = "1.21.2-do.2"
 
   node_pool {
     name       = "worker-pool"
