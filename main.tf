@@ -9,7 +9,7 @@ terraform {
   required_providers {
     digitalocean = {
       source  = "digitalocean/digitalocean"
-      version = "~> 1.22.2"
+      version = "~> 2.0"
     }
     cloudflare = {
       # Source is required for providers in other namespaces, to avoid ambiguity.
@@ -19,12 +19,12 @@ terraform {
     kubernetes = {
       # Source is required for providers in other namespaces, to avoid ambiguity.
       source  = "hashicorp/kubernetes"
-      version = "~> 1.13.2"
+      version = "~> 2.6.1"
     }
     helm = {
       # Source is required for providers in other namespaces, to avoid ambiguity.
       source  = "hashicorp/helm"
-      version = "~> 1.3.0"
+      version = "~> 2.4.1"
     }
   }
 }
