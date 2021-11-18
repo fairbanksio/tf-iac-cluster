@@ -3,9 +3,9 @@
 resource "digitalocean_kubernetes_cluster" "k8s" {
   name          = var.do_cluster_name
   region        = "sfo2"
-  auto_upgrade  = false
+  auto_upgrade  = true
   surge_upgrade = true
-  version       = "1.20.11-do.0"
+  version       = "1.21.3-do.0"
 
   node_pool {
     name       = "worker-pool"
