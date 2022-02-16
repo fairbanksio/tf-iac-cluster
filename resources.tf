@@ -1,11 +1,20 @@
 ## Digital Ocean
 
+data "digitalocean_kubernetes_versions" "latest" {
+  version_prefix = "1.21."
+}
+
 resource "digitalocean_kubernetes_cluster" "k8s" {
   name          = var.do_cluster_name
   region        = "sfo2"
   auto_upgrade  = true
   surge_upgrade = true
-  version       = "1.21.5-do.0"
+  version       = data.digitalocean_kubernetes_versions.latest.latest_version
+
+  maintenance_policy {
+    start_time = "13:00"
+    day        = "sunday"
+  }
 
   node_pool {
     name       = "worker-pool"
