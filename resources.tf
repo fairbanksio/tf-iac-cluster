@@ -105,14 +105,14 @@ resource "cloudflare_record" "f5" {
 }
 
 resource "cloudflare_page_rule" "f5-redirect" {
-  zone_id = var.cloudflare_zone_id_fairbanks_dev
-  target = "f5.fairbanks.dev"
+  zone_id  = var.cloudflare_zone_id_fairbanks_dev
+  target   = "f5.fairbanks.dev"
   priority = 1
 
   actions = {
     forwarding_url = {
-      url = "https://f5.news"
-      status_code= 301
+      url         = "https://f5.news"
+      status_code = 301
     }
   }
 }
