@@ -104,6 +104,7 @@ resource "cloudflare_record" "f5" {
 }
 
 resource "cloudflare_page_rule" "f5-redirect" {
+  provider = cloudflare.cloudflare-fairbanks
   zone_id  = var.cloudflare_zone_id_fairbanks_dev
   target   = "f5.fairbanks.dev"
   priority = 1
