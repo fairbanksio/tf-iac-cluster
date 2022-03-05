@@ -100,8 +100,8 @@ resource "cloudflare_record" "f5" {
   provider = cloudflare.cloudflare-fairbanks
   zone_id  = var.cloudflare_zone_id_fairbanks_dev
   name     = "f5"
-  value    = "f5.fairbanks.dev"
-  type     = "CNAME"
+  value    = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
+  type     = "A"
 }
 
 resource "cloudflare_page_rule" "f5-redirect" {
