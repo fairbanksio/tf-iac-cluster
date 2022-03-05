@@ -110,7 +110,7 @@ resource "cloudflare_page_rule" "f5-redirect" {
   priority = 1
 
   actions {
-    forwarding_url = {
+    forwarding_url {
       url         = "https://f5.news"
       status_code = 301
     }
