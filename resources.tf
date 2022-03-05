@@ -102,7 +102,7 @@ resource "cloudflare_record" "f5" {
   name     = "f5"
   value    = data.digitalocean_kubernetes_cluster.k8s.ipv4_address
   type     = "A"
-  proxied = true
+  proxied  = true
 }
 
 resource "cloudflare_page_rule" "f5-redirect" {
