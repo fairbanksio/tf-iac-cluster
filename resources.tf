@@ -101,7 +101,6 @@ resource "cloudflare_record" "f5" {
   name    = "f5"
   value   = "f5.fairbanks.dev"
   type    = "CNAME"
-  proxied = true
 }
 
 resource "cloudflare_page_rule" "f5-redirect" {
