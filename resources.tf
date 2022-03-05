@@ -95,3 +95,24 @@ resource "kubernetes_secret" "sealed-secret-custom-key" {
   }
   type = "kubernetes.io/tls"
 }
+
+resource "cloudflare_record" "f5" {
+  zone_id = var.cloudflare_zone_id_fairbanks_dev
+  name    = "f5"
+  value   = data.digitalocean_kubernetes_cluster.k8s.endpoint
+  type    = "A"
+  proxied = true
+}
+
+resource "cloudflare_page_rule" "f5-redirect" {
+  zone_id = var.cloudflare_zone_id_fairbanks_dev
+  target = "f5.fairbanks.dev"
+  priority = 1
+
+  actions = {
+    forwarding_url = {
+      url = "https://f5.news"
+      status_code= 302
+    }
+  }
+}
