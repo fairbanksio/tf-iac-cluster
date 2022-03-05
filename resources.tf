@@ -100,7 +100,7 @@ resource "cloudflare_record" "f5" {
   provider = cloudflare.cloudflare-fairbanks
   zone_id  = var.cloudflare_zone_id_fairbanks_dev
   name     = "f5"
-  value    = data.kubernetes_service.nginx-ingress-controller.load_balancer_ingress.0.ip
+  value    = data.digitalocean_kubernetes_cluster.k8s.ipv4_address
   type     = "A"
 }
 
