@@ -14,12 +14,12 @@ terraform {
     cloudflare = {
       # Source is required for providers in other namespaces, to avoid ambiguity.
       source  = "cloudflare/cloudflare"
-      version = "~> 2.11.0"
+      version = "~> 3.0"
     }
     kubernetes = {
       # Source is required for providers in other namespaces, to avoid ambiguity.
       source  = "hashicorp/kubernetes"
-      version = "~> 2.6.1"
+      version = "~> 2.8"
     }
     helm = {
       # Source is required for providers in other namespaces, to avoid ambiguity.
