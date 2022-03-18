@@ -204,15 +204,15 @@ resource "helm_release" "ingress" {
     value = "1"
   }
   set {
-    name  = "topologySpreadConstraints[0].topologyKey"
+    name  = "controller.topologySpreadConstraints[0].topologyKey"
     value = "kubernetes.io/hostname"
   }
   set {
-    name  = "topologySpreadConstraints[0].whenUnsatisfiable"
+    name  = "controller.topologySpreadConstraints[0].whenUnsatisfiable"
     value = "ScheduleAnyway"
   }
   set {
-    name  = "topologySpreadConstraints[0].labelSelector.matchLabels.app\\.kubernetes\\.io/app"
+    name  = "controller.topologySpreadConstraints[0].labelSelector.matchLabels.app\\.kubernetes\\.io/app"
     value = "nginx-ingress"
   }
 }
