@@ -200,7 +200,7 @@ resource "helm_release" "ingress" {
   }
 
   set {
-    name  = "topologySpreadConstraints[0].maxSkew"
+    name  = "controller.topologySpreadConstraints[0].maxSkew"
     value = "1"
   }
   set {
