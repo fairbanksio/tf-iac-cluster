@@ -168,11 +168,6 @@ resource "helm_release" "ingress" {
     value = "true"
   }
   set {
-    name  = "tcp.25"
-    value = "rcvr/rcvr-smtp:25"
-    type  = "string"
-  }
-  set {
     name  = "controller.config.use-proxy-protocol"
     value = "true"
     type  = "string"
@@ -202,6 +197,23 @@ resource "helm_release" "ingress" {
   set {
     name  = "controller.defaultBackendService"
     value = "default/pretty-default-backend"
+  }
+
+  set {
+    name  = "topologySpreadConstraints[0].maxSkew"
+    value = "1"
+  }
+  set {
+    name  = "topologySpreadConstraints[0].topologyKey"
+    value = "kubernetes.io/hostname"
+  }
+  set {
+    name  = "topologySpreadConstraints[0].whenUnsatisfiable"
+    value = "ScheduleAnyway"
+  }
+  set {
+    name  = "topologySpreadConstraints[0].labelSelector.matchLabels.app\\.kubernetes\\.io/app"
+    value = "nginx-ingress"
   }
 }
 
