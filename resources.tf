@@ -118,3 +118,113 @@ resource "cloudflare_page_rule" "f5-redirect" {
     }
   }
 }
+
+resource "helm_release" "ingress" {
+  repository = "https://charts.helm.sh/stable"
+  chart      = "nginx-ingress"
+  name       = "ingress"
+  set {
+    name  = "controller.service.name"
+    value = "nginx-ingress-controller"
+  }
+  set {
+    name  = "controller.autoscaling.enabled"
+    value = true
+  }
+  set {
+    name  = "controller.autoscaling.minReplicas"
+    value = "2"
+  }
+  set {
+    name  = "controller.autoscaling.maxReplicas"
+    value = 3
+  }
+  set {
+    name  = "controller.limits.cpu"
+    value = "200m"
+  }
+  set {
+    name  = "controller.autoscaling.targetCPUUtilizationPercentage"
+    value = "50"
+  }
+  set {
+    name  = "controller.autoscaling.minReplicas"
+    value = "2"
+  }
+  set {
+    name  = "controller.resources.requests.cpu"
+    value = "50m"
+  }
+  set {
+    name  = "controller.resources.requests.memory"
+    value = "200Mi"
+  }
+  set {
+    name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/do-loadbalancer-enable-proxy-protocol"
+    value = "true"
+  }
+  set {
+    name  = "controller.publishService.enabled"
+    value = "true"
+  }
+  set {
+    name  = "tcp.25"
+    value = "rcvr/rcvr-smtp:25"
+    type  = "string"
+  }
+  set {
+    name  = "controller.config.use-proxy-protocol"
+    value = "true"
+    type  = "string"
+  }
+  set {
+    name  = "controller.config.proxy-body-size"
+    value = "250m"
+  }
+  set {
+    name  = "controller.config.client-max-body-size"
+    value = "250m"
+  }
+  set {
+    name  = "controller.config.proxy-connect-timeout"
+    value = "60"
+    type  = "string"
+  }
+  set {
+    name  = "controller.config.proxy-read-timeout"
+    value = "60"
+    type  = "string"
+  }
+  set {
+    name  = "defaultBackend.enabled"
+    value = "false"
+  }
+  set {
+    name  = "controller.defaultBackendService"
+    value = "default/pretty-default-backend"
+  }
+}
+
+resource "helm_release" "pretty-default-backend" {
+  name       = "pretty-default-backend"
+  repository = "https://h.cfcr.io/bsord/charts"
+  chart      = "pretty-default-backend"
+  namespace  = "default"
+  version    = "0.4.0"
+  set {
+    name  = "autoscaling.enabled"
+    value = true
+  }
+  set {
+    name  = "autoscaling.minReplicas"
+    value = 2
+  }
+  set {
+    name  = "bgColor"
+    value = "#334455"
+  }
+  set {
+    name  = "brandingText"
+    value = "bsord.dev/fairbanks.dev"
+  }
+}
