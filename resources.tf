@@ -198,6 +198,23 @@ resource "helm_release" "ingress" {
     name  = "controller.defaultBackendService"
     value = "default/pretty-default-backend"
   }
+
+  set {
+    name = "topologySpreadConstraints[0].maxSkew"
+    value = "1"
+  }
+  set {
+    name = "topologySpreadConstraints[0].topologyKey"
+    value = "kubernetes.io/hostname"
+  }
+  set {
+    name = "topologySpreadConstraints[0].whenUnsatisfiable"
+    value = "ScheduleAnyway"
+  }
+  set {
+    name = "topologySpreadConstraints[0].labelSelector.matchLabels\\.app\\.kubernetes\\.io/instance"
+    value = "kube-system-nginx-ingress"
+  }
 }
 
 resource "helm_release" "pretty-default-backend" {
