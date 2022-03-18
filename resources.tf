@@ -212,8 +212,8 @@ resource "helm_release" "ingress" {
     value = "ScheduleAnyway"
   }
   set {
-    name  = "topologySpreadConstraints[0].labelSelector.matchLabels.app\\.kubernetes\\.io/instance"
-    value = "kube-system-nginx-ingress"
+    name  = "topologySpreadConstraints[0].labelSelector.matchLabels.app\\.kubernetes\\.io/app"
+    value = "nginx-ingress"
   }
 }
 
