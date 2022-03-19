@@ -70,26 +70,6 @@ registry:
   disableScanning: true
 EOT
   ]
-  set {
-    name  = "git.url"
-    value = "git@github.com:Fairbanks-io/flux-gitops-apps.git"
-  }
-  set {
-    name  = "git.secretName"
-    value = "flux-system"
-  }
-  set {
-    name  = "git.path"
-    value = "cluster"
-  }
-  set {
-    name  = "git.branch"
-    value = "main"
-  }
-  set {
-    name  = "registry.disableScanning"
-    value = true
-  }
 }
 
 resource "kubernetes_secret" "sealed-secret-custom-key" {
