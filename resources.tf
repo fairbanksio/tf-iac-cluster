@@ -114,6 +114,7 @@ resource "helm_release" "ingress" {
   repository = "https://kubernetes.github.io/ingress-nginx"
   chart      = "ingress-nginx"
   name       = "ingress"
+  version    = "4.0.18"
   values = [
     <<EOT
 rbac:
