@@ -154,7 +154,7 @@ defaultBackend:
   enabled: false
 EOT
   ]
-  
+
 }
 
 resource "helm_release" "pretty-default-backend" {
