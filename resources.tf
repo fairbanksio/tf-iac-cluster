@@ -223,20 +223,13 @@ resource "helm_release" "pretty-default-backend" {
   chart      = "pretty-default-backend"
   namespace  = "default"
   version    = "0.4.0"
-  set {
-    name  = "autoscaling.enabled"
-    value = true
-  }
-  set {
-    name  = "autoscaling.minReplicas"
-    value = 2
-  }
-  set {
-    name  = "bgColor"
-    value = "#334455"
-  }
-  set {
-    name  = "brandingText"
-    value = "bsord.dev/fairbanks.dev"
-  }
+  values = [
+    <<EOT
+autoscaling:
+  enabled: false
+  minReplicas: 2
+bgColor: "#334455"
+brandingText: "bsord.dev/fairbanks.dev"
+EOT
+  ]
 }
