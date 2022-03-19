@@ -150,9 +150,6 @@ controller:
     maxSkew: 1
     topologyKey: kubernetes.io/hostname
     whenUnsatisfiable: ScheduleAnyway
-  defaultBackendService: "default/pretty-default-backend"
-defaultBackend:
-  enabled: false
 EOT
   ]
 
