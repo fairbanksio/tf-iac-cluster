@@ -4,7 +4,7 @@ data "digitalocean_kubernetes_cluster" "k8s" {
 
 data "kubernetes_service" "nginx-ingress-controller" {
   metadata {
-    name = "ingress-nginx-ingress-controller"
+    name = "ingress-ingress-nginx-controller"
   }
   depends_on = [helm_release.ingress]
 }  
