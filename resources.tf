@@ -59,6 +59,17 @@ resource "helm_release" "fluxcd" {
   chart      = "flux"
   name       = "fluxcd"
   namespace  = "flux-system"
+  values = [
+    <<EOT
+git:
+  url: "git@github.com:Fairbanks-io/flux-gitops-apps.git"
+  secretName: "flux-system"
+  path: "cluster"
+  branch: "main"
+registry:
+  disableScanning: true
+EOT
+  ]
   set {
     name  = "git.url"
     value = "git@github.com:Fairbanks-io/flux-gitops-apps.git"
@@ -123,98 +134,47 @@ resource "helm_release" "ingress" {
   repository = "https://kubernetes.github.io/ingress-nginx"
   chart      = "ingress-nginx"
   name       = "ingress"
-  set {
-    name  = "controller.service.name"
-    value = "nginx-ingress-controller"
-  }
-  set {
-    name  = "controller.autoscaling.enabled"
-    value = true
-  }
-  set {
-    name  = "controller.autoscaling.minReplicas"
-    value = "2"
-  }
-  set {
-    name  = "controller.autoscaling.maxReplicas"
-    value = 3
-  }
-  set {
-    name  = "controller.limits.cpu"
-    value = "200m"
-  }
-  set {
-    name  = "controller.autoscaling.targetCPUUtilizationPercentage"
-    value = "50"
-  }
-  set {
-    name  = "controller.autoscaling.minReplicas"
-    value = "2"
-  }
-  set {
-    name  = "controller.resources.requests.cpu"
-    value = "50m"
-  }
-  set {
-    name  = "controller.resources.requests.memory"
-    value = "200Mi"
-  }
-  set {
-    name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/do-loadbalancer-enable-proxy-protocol"
-    value = "true"
-  }
-  set {
-    name  = "controller.publishService.enabled"
-    value = "true"
-  }
-  set {
-    name  = "controller.config.use-proxy-protocol"
-    value = "true"
-    type  = "string"
-  }
-  set {
-    name  = "controller.config.proxy-body-size"
-    value = "250m"
-  }
-  set {
-    name  = "controller.config.client-max-body-size"
-    value = "250m"
-  }
-  set {
-    name  = "controller.config.proxy-connect-timeout"
-    value = "60"
-    type  = "string"
-  }
-  set {
-    name  = "controller.config.proxy-read-timeout"
-    value = "60"
-    type  = "string"
-  }
-  set {
-    name  = "defaultBackend.enabled"
-    value = "false"
-  }
-  set {
-    name  = "controller.defaultBackendService"
-    value = "default/pretty-default-backend"
-  }
-
-  set {
-    name  = "controller.topologySpreadConstraints[0].maxSkew"
-    value = "1"
-  }
-  set {
-    name  = "controller.topologySpreadConstraints[0].topologyKey"
-    value = "kubernetes.io/hostname"
-  }
-  set {
-    name  = "controller.topologySpreadConstraints[0].whenUnsatisfiable"
-    value = "ScheduleAnyway"
-  }
-  set {
-    name  = "controller.topologySpreadConstraints[0].labelSelector.matchLabels.app\\.kubernetes\\.io/app"
-    value = "nginx-ingress"
-  }
+  values = [
+    <<EOT
+rbac:
+  create: true
+controller:
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 3
+    targetCPUUtilizationPercentage: 50
+  limits:
+    cpu: 200m
+  requests:
+    cpu: 50m
+    memory: 200Mi
+  service:
+    name: nginx-ingress-controller
+    annotations:
+      service.beta.kubernetes.io/do-loadbalancer-enable-proxy-protocol: true
+  config:
+    annotation-value-word-blocklist: "load_module,lua_package,_by_lua,root,proxy_pass,serviceaccount"
+    use-proxy-protocol: "true"
+    proxy-body-size: 250m
+    client-max-body-size: 250m
+    proxy-connect-timeout: "60"
+    proxy-read-timeout: "60"
+  affinity:
+  # An example of required pod anti-affinity
+  topologySpreadConstraints:
+  - labelSelector:
+      matchLabels:
+        app.kubernetes.io/instance: kube-system-nginx-ingress
+    maxSkew: 1
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: ScheduleAnyway
+  defaultBackendService: "default/pretty-default-backend"
+defaultBackend:
+  enabled: false
+EOT
+  ]
+  
 }
 
 resource "helm_release" "pretty-default-backend" {
