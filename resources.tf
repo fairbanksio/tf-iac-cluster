@@ -120,8 +120,8 @@ resource "cloudflare_page_rule" "f5-redirect" {
 }
 
 resource "helm_release" "ingress" {
-  repository = "https://charts.helm.sh/stable"
-  chart      = "nginx-ingress"
+  repository = "https://kubernetes.github.io/ingress-nginx"
+  chart      = "ingress-nginx"
   name       = "ingress"
   set {
     name  = "controller.service.name"
