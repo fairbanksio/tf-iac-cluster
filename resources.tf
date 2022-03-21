@@ -1,7 +1,7 @@
 ## Digital Ocean
 
 data "digitalocean_kubernetes_versions" "latest" {
-  version_prefix = "1.21."
+  version_prefix = "1.22."
 }
 
 resource "digitalocean_kubernetes_cluster" "k8s" {
