@@ -41,6 +41,9 @@ resource "kubernetes_namespace" "flux" {
       metadata[0].annotations,
     ]
   }
+  depends_on = [
+    digitalocean_kubernetes_cluster.k8s
+  ]
 }
 
 resource "kubernetes_secret" "flux-system" {
@@ -52,6 +55,10 @@ resource "kubernetes_secret" "flux-system" {
     identity    = var.flux_deploy_key
     known_hosts = local.known_hosts
   }
+
+  depends_on = [
+    digitalocean_kubernetes_cluster.k8s
+  ]
 }
 
 resource "helm_release" "fluxcd" {
@@ -70,6 +77,9 @@ registry:
   disableScanning: true
 EOT
   ]
+  depends_on = [
+    digitalocean_kubernetes_cluster.k8s
+  ]
 }
 
 resource "kubernetes_secret" "sealed-secret-custom-key" {
@@ -85,6 +95,10 @@ resource "kubernetes_secret" "sealed-secret-custom-key" {
     "tls.key" = var.sealed_sec
   }
   type = "kubernetes.io/tls"
+
+  depends_on = [
+    digitalocean_kubernetes_cluster.k8s
+  ]
 }
 
 resource "cloudflare_record" "f5" {
