@@ -34,11 +34,18 @@ jobs:
     - name: Terraform Format
       run: terraform fmt -check
 
-    # Generates an execution plan for Terraform
-    - name: Terraform Plan -destroy
+    # Generates an execution plan for Terraform (destroy mode)
+    - name: Generate DESTROY plan
       run: terraform plan -destroy
 
-      # On push to master, build or change infrastructure according to Terraform configuration files
-      # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
-    - name: Terraform Apply
+    # On push to master, DESTROY infrastructure according to Terraform configuration files
+    - name: DESTROY infrastructure
       run: terraform apply -destroy -auto-approve
+
+    # Generates an execution plan for Terraform (destroy mode)
+    - name: Terraform Plan (Rebuild)
+      run: terraform plan
+
+    # REBUILD infrastructure according to Terraform configuration files
+    - name: Terraform Apply (Rebuild)
+      run: terraform apply -auto-approve
