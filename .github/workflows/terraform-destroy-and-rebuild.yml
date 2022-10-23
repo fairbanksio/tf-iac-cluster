@@ -23,7 +23,7 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
       with:
-        terraform_version: 1.1.7
+        terraform_version: 1.3.3
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
@@ -42,9 +42,9 @@ jobs:
     - name: DESTROY infrastructure
       run: terraform apply -destroy -auto-approve
 
-    # Generates an execution plan for Terraform (destroy mode)
-    - name: Terraform Plan (Rebuild)
-      run: terraform plan
+    # Build cluster first
+    - name: Terraform Plan
+      run: terraform apply -target=digitalocean_kubernetes_cluster.k8s -auto-approve
 
     # REBUILD infrastructure according to Terraform configuration files
     - name: Terraform Apply (Rebuild)
