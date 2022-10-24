@@ -74,3 +74,4 @@ Change the Execution Mode to Local. This will change the runs to complete automa
 - [ ] Rename do_Access_id to 'do_spaces_access_key'
 - [ ] Rename do_secret_key to 'do_spaces_secret_key'
 - [ ] Add 'troubleshooting section' to README
+- [ ] Fix destroy and rebuild workflow
